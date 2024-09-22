@@ -1,8 +1,18 @@
 import React, { useState } from "react";
 
-const SocialLinksForm: React.FC<{ onSubmit: (data: any) => void }> = ({
-  onSubmit,
-}) => {
+interface SocialLinksData {
+  twitter?: string;
+  linkedin?: string;
+  instagram?: string;
+  discord?: string;
+  telegram?: string;
+  medium?: string;
+  youtube?: string;
+}
+
+const SocialLinksForm: React.FC<{
+  onSubmit: (data: SocialLinksData) => void;
+}> = ({ onSubmit }) => {
   const [socialLinks, setSocialLinks] = useState({
     twitter: "",
     instagram: "",

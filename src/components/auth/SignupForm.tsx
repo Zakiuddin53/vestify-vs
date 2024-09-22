@@ -1,63 +1,105 @@
 "use client";
-
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import VCInfoForm from "./VCInfoForm";
 import VCTagsForm from "./VCTagsForm";
-import { signUp, createVC } from "@/lib/api";
+import { signUp, createVC, createProject } from "@/lib/api";
 import InitialSignupForm from "./InitialSignupForm";
-import SocialLinksForm from "./SocialLinksForm";
+import ProjectBasicInfoForm from "../ProjectBasicInfoForm";
+
+interface UserData {
+  userType: string;
+  username?: string;
+  email?: string;
+  password?: string;
+  name?: string;
+  description?: string;
+  logoBase64?: string;
+  tags?: string[];
+  kycDone?: boolean;
+  subscriptionFee?: number;
+  vcId?: string;
+}
 
 const SignupForm: React.FC = () => {
   const [step, setStep] = useState(1);
-  const [userData, setUserData] = useState({ userType: "VC" });
+  const [userData, setUserData] = useState<UserData>({ userType: "VC" });
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleInitialSignup = async (formData) => {
+  const handleInitialSignup = async (formData: {
+    username: string;
+    email: string;
+    password: string;
+  }) => {
     try {
       const signupData = { ...formData, userType: "VC" };
-      const response = await signUp(signupData);
-      if (response.success) {
-        setUserData((prev) => ({ ...prev, ...signupData }));
-        setStep(2);
-      } else {
-        setError(response.message || "Signup failed. Please try again.");
-      }
+      await signUp(signupData);
+      setUserData((prev) => ({ ...prev, ...signupData }));
+      setStep(2);
     } catch (error) {
       setError("An error occurred during signup.");
       console.error("Signup error:", error);
     }
   };
 
-  const handleVCInfoSubmit = (vcInfo) => {
+  const handleVCInfoSubmit = (vcInfo: {
+    name: string;
+    description: string;
+    logoBase64: string;
+  }) => {
     setUserData((prev) => ({ ...prev, ...vcInfo }));
     setStep(3);
   };
 
-  const handleVCTagsSubmit = (tagsAndSubscription) => {
-    setUserData((prev) => ({ ...prev, ...tagsAndSubscription }));
-    setStep(4);
-  };
-
-  const handleSocialLinksSubmit = async (socialLinks) => {
-    const finalData = {
-      ...userData,
-      ...socialLinks,
+  const handleVCTagsSubmit = async (tagsAndSubscription: {
+    tags: string[];
+    kycDone: boolean;
+    subscriptionFee: number;
+  }) => {
+    const finalVCData = {
+      name: userData.name!,
+      description: userData.description!,
+      logoBase64: userData.logoBase64!,
+      subscriptionFee: tagsAndSubscription.subscriptionFee,
+      tags: tagsAndSubscription.tags,
+      kycDone: tagsAndSubscription.kycDone,
     };
 
     try {
-      const response = await createVC(finalData);
-      if (response.success) {
-        router.push("/dashboard");
-      } else {
-        setError(
-          response.message || "Failed to create VC profile. Please try again."
-        );
-      }
+      const response = await createVC(finalVCData);
+      setUserData((prev) => ({ ...prev, vcId: response.data.vc.name })); // Use VC name as ID for now
+      setStep(4);
     } catch (error) {
       setError("An error occurred while creating VC profile.");
       console.error("VC profile creation error:", error);
+    }
+  };
+
+  const handleProjectBasicInfoSubmit = async (projectInfo: {
+    name: string;
+    description: string;
+    category: string;
+    round: string;
+  }) => {
+    const projectData = {
+      info: {
+        ...projectInfo,
+        vcId: userData.vcId!,
+      },
+      tokenMetrics: {},
+      deals: {},
+      teamAndAdvisors: [],
+      partnersAndInvestors: [],
+      projectSocials: {},
+    };
+
+    try {
+      await createProject(projectData);
+      router.push("/dashboard");
+    } catch (error) {
+      setError("An error occurred while creating the project.");
+      console.error("Project creation error:", error);
     }
   };
 
@@ -74,7 +116,9 @@ const SignupForm: React.FC = () => {
         {step === 1 && <InitialSignupForm onSubmit={handleInitialSignup} />}
         {step === 2 && <VCInfoForm onSubmit={handleVCInfoSubmit} />}
         {step === 3 && <VCTagsForm onSubmit={handleVCTagsSubmit} />}
-        {step === 4 && <SocialLinksForm onSubmit={handleSocialLinksSubmit} />}
+        {step === 4 && (
+          <ProjectBasicInfoForm onSubmit={handleProjectBasicInfoSubmit} />
+        )}
       </div>
     </div>
   );

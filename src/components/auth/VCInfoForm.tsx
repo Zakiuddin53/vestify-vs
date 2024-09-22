@@ -1,20 +1,33 @@
+"use client";
+
 import React, { useState } from "react";
 
-const VCInfoForm: React.FC<{ onSubmit: (data: any) => void }> = ({
-  onSubmit,
-}) => {
+interface VCInfoFormProps {
+  onSubmit: (data: {
+    name: string;
+    description: string;
+    logoBase64: string;
+  }) => void;
+}
+
+const VCInfoForm: React.FC<VCInfoFormProps> = ({ onSubmit }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [logo, setLogo] = useState<File | null>(null);
+  const [logoBase64, setLogoBase64] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({ name, description, logo });
+    onSubmit({ name, description, logoBase64 });
   };
 
   const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setLogo(e.target.files[0]);
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setLogoBase64(reader.result as string);
+      };
+      reader.readAsDataURL(file);
     }
   };
 

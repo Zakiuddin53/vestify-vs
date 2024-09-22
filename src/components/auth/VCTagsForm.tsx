@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 
-const VCTagsForm: React.FC<{ onSubmit: (data: any) => void }> = ({
-  onSubmit,
-}) => {
+interface VCTagsFormProps {
+  onSubmit: (data: {
+    tags: string[];
+    kycDone: boolean;
+    subscriptionFee: number;
+  }) => void;
+}
+
+const VCTagsForm: React.FC<VCTagsFormProps> = ({ onSubmit }) => {
   const [tags, setTags] = useState<string[]>([]);
   const [currentTag, setCurrentTag] = useState("");
   const [kycDone, setKycDone] = useState(false);
@@ -17,21 +23,34 @@ const VCTagsForm: React.FC<{ onSubmit: (data: any) => void }> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({ tags, kycDone, subscriptionFee: parseFloat(subscriptionFee) });
+    onSubmit({
+      tags,
+      kycDone,
+      subscriptionFee: parseFloat(subscriptionFee) || 0,
+    });
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-2xl font-bold mb-6">Add new VC</h2>
+      <h2 className="text-2xl font-bold mb-6">Add VC Tags</h2>
       <div>
         <input
           type="text"
           value={currentTag}
           onChange={(e) => setCurrentTag(e.target.value)}
-          onKeyPress={(e) => e.key === "Enter" && handleAddTag()}
+          onKeyPress={(e) =>
+            e.key === "Enter" && (e.preventDefault(), handleAddTag())
+          }
           placeholder="Add project tags"
           className="w-full p-2 border rounded"
         />
+        <button
+          type="button"
+          onClick={handleAddTag}
+          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Add Tag
+        </button>
       </div>
       <div className="flex flex-wrap gap-2">
         {tags.map((tag) => (

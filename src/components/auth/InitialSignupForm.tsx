@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 
-const InitialSignupForm: React.FC<{ onSubmit: (data: any) => void }> = ({
-  onSubmit,
-}) => {
+interface SignupFormData {
+  email: string;
+  password: string;
+  username: string;
+}
+
+const InitialSignupForm: React.FC<{
+  onSubmit: (data: SignupFormData) => void;
+}> = ({ onSubmit }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
