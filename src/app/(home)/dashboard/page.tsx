@@ -1,9 +1,9 @@
-"use client";
+import BasicInformation from "@/components/projectComponents/BasicInformation";
 
 export default function HomeDashboard() {
   return (
     <>
-      <h1>Hiii</h1>
+      <BasicInformation />
     </>
   );
 }

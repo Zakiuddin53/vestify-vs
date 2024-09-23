@@ -1,13 +1,13 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
-interface SignUpData {
+export interface SignUpData {
   username: string;
   email: string;
   password: string;
   userType: string;
 }
 
-interface VCData {
+export interface VCData {
   name: string;
   description: string;
   logoBase64: string;
@@ -16,21 +16,56 @@ interface VCData {
   kycDone: boolean;
 }
 
-interface ProjectInfo {
+export interface ProjectInfo {
   name: string;
   category: string;
   description: string;
   round: string;
-  vcId: string;
 }
 
-interface ProjectData {
+export interface TokenMetrics {
+  allocation: string;
+  fdv: string;
+  price: string;
+  tgeUnlock: string;
+  tge: string;
+  vesting: string;
+}
+
+export interface Deals {
+  maximum: number;
+  minimum: number;
+  acceptedTokens: string;
+  poolFee: number;
+}
+
+export interface TeamMember {
+  description: string;
+  name: string;
+  title: string;
+}
+
+export interface Partner {
+  logo: string | File | null;
+  name: string;
+}
+
+export interface ProjectSocials {
+  x?: string;
+  instagram?: string;
+  discord?: string;
+  telegram?: string;
+  medium?: string;
+  youtube?: string;
+}
+
+export interface ProjectData {
   info: ProjectInfo;
-  tokenMetrics: Record<string, unknown>;
-  deals: Record<string, unknown>;
-  teamAndAdvisors: unknown[];
-  partnersAndInvestors: unknown[];
-  projectSocials: Record<string, unknown>;
+  tokenMetrics: TokenMetrics;
+  deals: Deals;
+  teamAndAdvisors: TeamMember[];
+  partnersAndInvestors: Partner[];
+  projectSocials: ProjectSocials;
 }
 
 interface ApiResponse<T> {

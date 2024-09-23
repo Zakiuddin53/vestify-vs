@@ -1,11 +1,12 @@
+// components/SignupForm.tsx
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import VCInfoForm from "./VCInfoForm";
 import VCTagsForm from "./VCTagsForm";
-import { signUp, createVC, createProject } from "@/lib/api";
+import { signUp, createVC } from "@/lib/api";
 import InitialSignupForm from "./InitialSignupForm";
-import ProjectBasicInfoForm from "../ProjectBasicInfoForm";
+import imageCompression from "browser-image-compression";
 
 interface UserData {
   userType: string;
@@ -18,7 +19,6 @@ interface UserData {
   tags?: string[];
   kycDone?: boolean;
   subscriptionFee?: number;
-  vcId?: string;
 }
 
 const SignupForm: React.FC = () => {
@@ -43,13 +43,27 @@ const SignupForm: React.FC = () => {
     }
   };
 
-  const handleVCInfoSubmit = (vcInfo: {
+  const handleVCInfoSubmit = async (vcInfo: {
     name: string;
     description: string;
-    logoBase64: string;
+    logoFile: File;
   }) => {
-    setUserData((prev) => ({ ...prev, ...vcInfo }));
-    setStep(3);
+    try {
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+      };
+      const compressedFile = await imageCompression(vcInfo.logoFile, options);
+      const logoBase64 = await imageCompression.getDataUrlFromFile(
+        compressedFile
+      );
+      setUserData((prev) => ({ ...prev, ...vcInfo, logoBase64 }));
+      setStep(3);
+    } catch (error) {
+      setError("An error occurred while compressing the image.");
+      console.error("Image compression error:", error);
+    }
   };
 
   const handleVCTagsSubmit = async (tagsAndSubscription: {
@@ -67,39 +81,11 @@ const SignupForm: React.FC = () => {
     };
 
     try {
-      const response = await createVC(finalVCData);
-      setUserData((prev) => ({ ...prev, vcId: response.data.vc.name })); // Use VC name as ID for now
-      setStep(4);
+      await createVC(finalVCData);
+      router.push("/create-project");
     } catch (error) {
       setError("An error occurred while creating VC profile.");
       console.error("VC profile creation error:", error);
-    }
-  };
-
-  const handleProjectBasicInfoSubmit = async (projectInfo: {
-    name: string;
-    description: string;
-    category: string;
-    round: string;
-  }) => {
-    const projectData = {
-      info: {
-        ...projectInfo,
-        vcId: userData.vcId!,
-      },
-      tokenMetrics: {},
-      deals: {},
-      teamAndAdvisors: [],
-      partnersAndInvestors: [],
-      projectSocials: {},
-    };
-
-    try {
-      await createProject(projectData);
-      router.push("/dashboard");
-    } catch (error) {
-      setError("An error occurred while creating the project.");
-      console.error("Project creation error:", error);
     }
   };
 
@@ -110,15 +96,12 @@ const SignupForm: React.FC = () => {
         <div className="mb-4 bg-gray-200 rounded-full h-2">
           <div
             className="bg-purple-600 h-2 rounded-full"
-            style={{ width: `${step * 25}%` }}
+            style={{ width: `${step * 33.33}%` }}
           ></div>
         </div>
         {step === 1 && <InitialSignupForm onSubmit={handleInitialSignup} />}
         {step === 2 && <VCInfoForm onSubmit={handleVCInfoSubmit} />}
         {step === 3 && <VCTagsForm onSubmit={handleVCTagsSubmit} />}
-        {step === 4 && (
-          <ProjectBasicInfoForm onSubmit={handleProjectBasicInfoSubmit} />
-        )}
       </div>
     </div>
   );

@@ -6,41 +6,38 @@ interface VCInfoFormProps {
   onSubmit: (data: {
     name: string;
     description: string;
-    logoBase64: string;
+    logoFile: File;
   }) => void;
 }
 
-const VCInfoForm: React.FC<VCInfoFormProps> = ({ onSubmit }) => {
+const VCInfoForm: React.FC<{
+  onSubmit: (vcInfo: {
+    name: string;
+    description: string;
+    logoFile: File;
+  }) => void;
+}> = ({ onSubmit }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [logoBase64, setLogoBase64] = useState("");
+  const [logoFile, setLogoFile] = useState<File | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({ name, description, logoBase64 });
-  };
-
-  const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setLogoBase64(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+    if (logoFile) {
+      onSubmit({ name, description, logoFile });
+    } else {
+      // Handle error: logo file is required
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit}>
       <h2 className="text-2xl font-bold mb-6">Add new VC</h2>
       <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
         <input
           type="file"
-          onChange={handleLogoChange}
           accept="image/*"
-          className="hidden"
-          id="logo-upload"
+          onChange={(e) => setLogoFile(e.target.files?.[0] || null)}
         />
         <label htmlFor="logo-upload" className="cursor-pointer">
           <div className="text-gray-500">
