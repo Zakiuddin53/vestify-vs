@@ -111,7 +111,7 @@ export const createVC = async (
       "POST",
       data
     );
-    console.log("createVC response:", response); // For debugging
+    console.log("createVC response:", response);
     return response;
   } catch (error: any) {
     console.error("Error in createVC:", error);

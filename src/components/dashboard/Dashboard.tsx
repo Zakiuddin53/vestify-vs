@@ -1,30 +1,60 @@
+// Dashboard.tsx
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { SideNavbar } from "../ui/SideNavbar";
 import ProjectCard from "../projectComponents/ProjectCard";
+
 interface Project {
   id: string;
   name: string;
   description: string;
-  status: "Success" | "In Progress";
-  progress: number;
+  round: string;
+}
+
+interface ApiResponse {
+  data: Project[];
+  success: boolean;
+  message: string;
 }
 
 const Dashboard: React.FC = () => {
   const router = useRouter();
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Mock data - replace this with API call in the future
-  const projects: Project[] = [
-    {
-      id: "1",
-      name: "Zksync",
-      description:
-        "Spicy Capital Is A Dynamic And Visionary Venture Capital Firm That Ignites Innovation And Accelerates Growth In The Startup Landscape. Founded On The Belief That Bold Ideas Should Be Seasoned With Strategic Investment, Spicy Capital Specializes In Early-Stage Ventures Across Diverse Sectors. Pro Susanna",
-      status: "Success",
-      progress: 80,
-    },
-  ];
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const vcId = localStorage.getItem("vcId");
+        if (!vcId) {
+          throw new Error("VC ID not found");
+        }
+
+        const response = await fetch(
+          `http://localhost:3000/api/vc/${vcId}/projects`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch projects");
+        }
+
+        const result: ApiResponse = await response.json();
+        if (result.success) {
+          setProjects(result.data);
+        } else {
+          throw new Error(result.message || "Failed to fetch projects");
+        }
+      } catch (error) {
+        console.error("Failed to fetch projects:", error);
+        setError(error instanceof Error ? error.message : "An error occurred");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
 
   const handleAddProject = () => {
     router.push("/create-project");
@@ -51,11 +81,24 @@ const Dashboard: React.FC = () => {
               </button>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
+
+          {loading ? (
+            <div>Loading...</div>
+          ) : error ? (
+            <div className="text-red-500 mb-4">{error}</div>
+          ) : projects.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-gray-600 mb-4">
+                No projects found. Create your first project!
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {projects.map((project) => (
+                <ProjectCard key={project.id} project={project} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
