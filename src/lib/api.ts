@@ -4,7 +4,7 @@ export interface SignUpData {
   username: string;
   email: string;
   password: string;
-  userType: string;
+  accountType: string;
 }
 
 export interface VCData {
@@ -21,6 +21,7 @@ export interface ProjectInfo {
   category: string;
   description: string;
   round: string;
+  vcId: string;
 }
 
 export interface TokenMetrics {
@@ -46,8 +47,8 @@ export interface TeamMember {
 }
 
 export interface Partner {
-  logo: string | File | null;
   name: string;
+  logoBase64: string | null;
 }
 
 export interface ProjectSocials {
@@ -71,6 +72,10 @@ export interface ProjectData {
 interface ApiResponse<T> {
   data: T;
   message: string;
+}
+
+interface CreateVCResponse {
+  vcId: string;
 }
 
 async function fetchApi<T>(
@@ -97,10 +102,21 @@ export const signUp = (
   return fetchApi<{ user: SignUpData }>("/api/auth/signup", "POST", data);
 };
 
-export const createVC = (
+export const createVC = async (
   data: VCData
-): Promise<ApiResponse<{ vc: VCData }>> => {
-  return fetchApi<{ vc: VCData }>("/api/vc/new", "POST", data);
+): Promise<ApiResponse<CreateVCResponse>> => {
+  try {
+    const response = await fetchApi<CreateVCResponse>(
+      "/api/vc/new",
+      "POST",
+      data
+    );
+    console.log("createVC response:", response); // For debugging
+    return response;
+  } catch (error: any) {
+    console.error("Error in createVC:", error);
+    throw error;
+  }
 };
 
 export const createProject = (

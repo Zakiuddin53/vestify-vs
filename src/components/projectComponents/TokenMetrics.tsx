@@ -22,6 +22,12 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
   const [tge, setTge] = useState("");
   const [vesting, setVesting] = useState("");
 
+  const formatDate = (dateString: string): string => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return date.toISOString(); // This will format the date as "2024-08-28T12:20:13.264Z"
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onComplete({
@@ -30,8 +36,8 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
         fdv,
         price,
         tgeUnlock,
-        tge,
-        vesting,
+        tge: formatDate(tge),
+        vesting: formatDate(vesting),
       },
     });
   };
@@ -39,51 +45,98 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <h2 className="text-2xl font-bold">Token Metrics</h2>
-      <input
-        type="text"
-        value={allocation}
-        onChange={(e) => setAllocation(e.target.value)}
-        placeholder="Enter Allocation"
-        className="w-full py-2 px-4 border rounded-md"
-      />
-      <input
-        type="text"
-        value={fdv}
-        onChange={(e) => setFdv(e.target.value)}
-        placeholder="Enter FDV"
-        className="w-full py-2 px-4 border rounded-md"
-      />
-      <input
-        type="text"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-        placeholder="Enter price"
-        className="w-full py-2 px-4 border rounded-md"
-      />
-      <input
-        type="text"
-        value={tgeUnlock}
-        onChange={(e) => setTgeUnlock(e.target.value)}
-        placeholder="Enter TGE unlock"
-        className="w-full py-2 px-4 border rounded-md"
-      />
-      <input
-        type="datetime-local"
-        value={tge}
-        onChange={(e) => setTge(e.target.value)}
-        placeholder="Enter TGE date"
-        className="w-full py-2 px-4 border rounded-md"
-      />
-      <input
-        type="datetime-local"
-        value={vesting}
-        onChange={(e) => setVesting(e.target.value)}
-        placeholder="Vesting"
-        className="w-full py-2 px-4 border rounded-md"
-      />
+
+      <div>
+        <label htmlFor="allocation" className="block mb-1">
+          Allocation
+        </label>
+        <input
+          id="allocation"
+          type="text"
+          value={allocation}
+          onChange={(e) => setAllocation(e.target.value)}
+          placeholder="Enter Allocation"
+          className="w-full py-2 px-4 border rounded-md"
+          required
+        />
+      </div>
+
+      <div>
+        <label htmlFor="fdv" className="block mb-1">
+          FDV
+        </label>
+        <input
+          id="fdv"
+          type="text"
+          value={fdv}
+          onChange={(e) => setFdv(e.target.value)}
+          placeholder="Enter FDV"
+          className="w-full py-2 px-4 border rounded-md"
+          required
+        />
+      </div>
+
+      <div>
+        <label htmlFor="price" className="block mb-1">
+          Price
+        </label>
+        <input
+          id="price"
+          type="text"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          placeholder="Enter price"
+          className="w-full py-2 px-4 border rounded-md"
+          required
+        />
+      </div>
+
+      <div>
+        <label htmlFor="tgeUnlock" className="block mb-1">
+          TGE Unlock
+        </label>
+        <input
+          id="tgeUnlock"
+          type="text"
+          value={tgeUnlock}
+          onChange={(e) => setTgeUnlock(e.target.value)}
+          placeholder="Enter TGE unlock"
+          className="w-full py-2 px-4 border rounded-md"
+          required
+        />
+      </div>
+
+      <div>
+        <label htmlFor="tge" className="block mb-1">
+          TGE Date
+        </label>
+        <input
+          id="tge"
+          type="datetime-local"
+          value={tge}
+          onChange={(e) => setTge(e.target.value)}
+          className="w-full py-2 px-4 border rounded-md"
+          required
+        />
+      </div>
+
+      <div>
+        <label htmlFor="vesting" className="block mb-1">
+          Vesting Date
+        </label>
+        <input
+          id="vesting"
+          type="datetime-local"
+          value={vesting}
+          onChange={(e) => setVesting(e.target.value)}
+          className="w-full py-2 px-4 border rounded-md"
+          required
+        />
+      </div>
+
       <button
         type="submit"
-        className="w-full py-2 px-4 bg-purple-600 text-white rounded-md"
+        className="w-full py-2 px-4 bg-purple-600 text-white rounded-md hover:bg-purple-700"
       >
         Proceed
       </button>

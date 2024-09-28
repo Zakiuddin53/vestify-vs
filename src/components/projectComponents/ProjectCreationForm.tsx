@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import BasicInformation from "./BasicInformation";
 import TokenMetrics from "./TokenMetrics";
@@ -14,14 +14,43 @@ const ProjectCreationForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [projectData, setProjectData] = useState<ProjectData>({
-    info: {} as ProjectData["info"],
-    tokenMetrics: {} as ProjectData["tokenMetrics"],
-    deals: {} as ProjectData["deals"],
+    info: {
+      vcId: "",
+      name: "",
+      category: "",
+      description: "",
+      round: "",
+    },
+    tokenMetrics: {
+      allocation: "",
+      fdv: "",
+      price: "",
+      tgeUnlock: "",
+      tge: "",
+      vesting: "",
+    },
+    deals: {
+      maximum: 0,
+      minimum: 0,
+      acceptedTokens: "",
+      poolFee: 0,
+    },
     teamAndAdvisors: [],
     partnersAndInvestors: [],
-    projectSocials: {} as ProjectData["projectSocials"],
+    projectSocials: {},
   });
   const router = useRouter();
+
+  useEffect(() => {
+    const storedVcId = localStorage.getItem("vcId") || "";
+    setProjectData((prevData) => ({
+      ...prevData,
+      info: {
+        ...prevData.info,
+        vcId: storedVcId,
+      },
+    }));
+  }, []);
 
   const handleStepComplete = (stepData: Partial<ProjectData>) => {
     setProjectData((prev) => ({ ...prev, ...stepData }));
@@ -48,6 +77,7 @@ const ProjectCreationForm: React.FC = () => {
     <div className="max-w-2xl mx-auto mt-10">
       {step === 1 && (
         <BasicInformation
+          vcId={projectData.info.vcId}
           onComplete={(data) => handleStepComplete({ info: data.info })}
         />
       )}

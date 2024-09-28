@@ -9,7 +9,7 @@ import InitialSignupForm from "./InitialSignupForm";
 import imageCompression from "browser-image-compression";
 
 interface UserData {
-  userType: string;
+  accountType: string;
   username?: string;
   email?: string;
   password?: string;
@@ -23,7 +23,7 @@ interface UserData {
 
 const SignupForm: React.FC = () => {
   const [step, setStep] = useState(1);
-  const [userData, setUserData] = useState<UserData>({ userType: "VC" });
+  const [userData, setUserData] = useState<UserData>({ accountType: "VC" });
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -33,7 +33,7 @@ const SignupForm: React.FC = () => {
     password: string;
   }) => {
     try {
-      const signupData = { ...formData, userType: "VC" };
+      const signupData = { ...formData, accountType: "VC" };
       await signUp(signupData);
       setUserData((prev) => ({ ...prev, ...signupData }));
       setStep(2);
@@ -81,11 +81,18 @@ const SignupForm: React.FC = () => {
     };
 
     try {
-      await createVC(finalVCData);
-      router.push("/create-project");
-    } catch (error) {
-      setError("An error occurred while creating VC profile.");
-      console.error("VC profile creation error:", error);
+      const response = await createVC(finalVCData);
+
+      if (response.data && response.data.vcId) {
+        console.log("VC created successfully with ID:", response.data.vcId);
+        localStorage.setItem("vcId", response.data.vcId);
+        router.push("/dashboard");
+      } else {
+        throw new Error("Unexpected response format");
+      }
+    } catch (error: any) {
+      const errorMessage = error.message || "An unknown error occurred";
+      setError(`Error creating VC profile: ${errorMessage}`);
     }
   };
 

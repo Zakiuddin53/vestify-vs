@@ -1,9 +1,5 @@
-import BasicInformation from "@/components/projectComponents/BasicInformation";
+import Dashboard from "@/components/dashboard/Dashboard";
 
-export default function HomeDashboard() {
-  return (
-    <>
-      <BasicInformation />
-    </>
-  );
+export default function DashboardPage() {
+  return <Dashboard />;
 }

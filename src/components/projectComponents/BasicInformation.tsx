@@ -1,14 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface BasicInformationProps {
+  vcId: string;
   onComplete: (data: {
     info: {
       name: string;
       category: string;
       description: string;
       round: string;
+      vcId: string;
     };
   }) => void;
 }
@@ -18,6 +20,13 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ onComplete }) => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [round, setRound] = useState("");
+  const [vcId, setVcId] = useState("");
+
+  useEffect(() => {
+    // Access localStorage only on the client side
+    const storedVcId = localStorage.getItem("vcId") || "";
+    setVcId(storedVcId);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,6 +36,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ onComplete }) => {
         category,
         description,
         round,
+        vcId,
       },
     });
   };

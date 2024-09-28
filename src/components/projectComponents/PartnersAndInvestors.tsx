@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from "react";
+import imageCompression from "browser-image-compression";
 
 interface Partner {
   name: string;
-  logo: string | null;
+  logoBase64: string | null;
 }
 
 interface PartnersAndInvestorsProps {
@@ -14,7 +15,7 @@ const PartnersAndInvestors: React.FC<PartnersAndInvestorsProps> = ({
   onComplete,
 }) => {
   const [partners, setPartners] = useState<Partner[]>([
-    { name: "", logo: null },
+    { name: "", logoBase64: null },
   ]);
 
   const handleNameChange = (index: number, value: string) => {
@@ -24,32 +25,42 @@ const PartnersAndInvestors: React.FC<PartnersAndInvestorsProps> = ({
     setPartners(updatedPartners);
   };
 
-  const handleLogoChange = (
+  const handleLogoChange = async (
     index: number,
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = event.target.files ? event.target.files[0] : null;
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        const updatedPartners = partners.map((partner, i) =>
-          i === index ? { ...partner, logo: base64String } : partner
-        );
-        setPartners(updatedPartners);
-      };
-      reader.readAsDataURL(file);
+      try {
+        const compressedFile = await imageCompression(file, {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+        });
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result as string;
+          const updatedPartners = partners.map((partner, i) =>
+            i === index ? { ...partner, logoBase64: base64String } : partner
+          );
+          setPartners(updatedPartners);
+        };
+        reader.readAsDataURL(compressedFile);
+      } catch (error) {
+        console.error("Error compressing image:", error);
+      }
     }
   };
 
   const addPartner = () => {
-    setPartners([...partners, { name: "", logo: null }]);
+    setPartners([...partners, { name: "", logoBase64: null }]);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const validPartners = partners.filter(
-      (partner) => partner.name && partner.logo
+      (partner) => partner.name && partner.logoBase64
     );
     onComplete({ partnersAndInvestors: validPartners });
   };
@@ -110,7 +121,7 @@ const PartnersAndInvestors: React.FC<PartnersAndInvestorsProps> = ({
                 SVG, PNG, JPG • Max. 5MB
               </span>
             </div>
-            {partner.logo && (
+            {partner.logoBase64 && (
               <p className="mt-1 text-sm text-gray-600">Logo uploaded</p>
             )}
           </div>
