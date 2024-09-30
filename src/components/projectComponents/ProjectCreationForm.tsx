@@ -62,7 +62,7 @@ const ProjectCreationForm: React.FC = () => {
     setError(null);
     try {
       await createProject(projectData);
-      router.push("/dashboard");
+      router.push("/vc");
     } catch (error) {
       console.error("Project creation error:", error);
       setError(

@@ -1,84 +1,132 @@
 "use client";
 
 import React, { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Input } from "../ui/Input";
+import { Button } from "../ui/Button";
+import Image from "next/image";
+
+const MAX_FILE_SIZE = 5000000;
+const ACCEPTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
+
+const vcInfoSchema = z.object({
+  name: z.string().min(1, "VC name is required"),
+  description: z.string().min(10, "Description must be at least 10 characters"),
+  logoFile: z
+    .instanceof(File)
+    .refine((file) => file.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
+    .refine(
+      (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
+      "Only .jpg, .jpeg, .png and .webp formats are supported."
+    ),
+});
+type VCInfoFormData = z.infer<typeof vcInfoSchema>;
 
 interface VCInfoFormProps {
-  onSubmit: (data: {
-    name: string;
-    description: string;
-    logoFile: File;
-  }) => void;
+  onSubmit: SubmitHandler<VCInfoFormData>;
 }
 
-const VCInfoForm: React.FC<{
-  onSubmit: (vcInfo: {
-    name: string;
-    description: string;
-    logoFile: File;
-  }) => void;
-}> = ({ onSubmit }) => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [logoFile, setLogoFile] = useState<File | null>(null);
+const VCInfoForm: React.FC<VCInfoFormProps> = ({ onSubmit }) => {
+  const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<VCInfoFormData>({
+    resolver: zodResolver(vcInfoSchema),
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (logoFile) {
-      onSubmit({ name, description, logoFile });
-    } else {
-      // Handle error: logo file is required
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      setValue("logoFile", file);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setLogoPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
+  const onSubmitWrapper: SubmitHandler<VCInfoFormData> = (data) => {
+    onSubmit(data);
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <h2 className="text-2xl font-bold mb-6">Add new VC</h2>
-      <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setLogoFile(e.target.files?.[0] || null)}
-        />
-        <label htmlFor="logo-upload" className="cursor-pointer">
-          <div className="text-gray-500">
-            <svg
-              className="mx-auto h-12 w-12"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
-            <p>Drop your logo here, or browse</p>
-          </div>
+    <form onSubmit={handleSubmit(onSubmitWrapper)} className="space-y-6">
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Upload logo
         </label>
+        <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+          <input
+            type="file"
+            onChange={handleFileChange}
+            className="hidden"
+            id="logo-upload"
+            accept={ACCEPTED_IMAGE_TYPES.join(",")}
+          />
+          <label htmlFor="logo-upload" className="cursor-pointer">
+            {logoPreview ? (
+              <Image
+                src={logoPreview}
+                alt="Logo preview"
+                width={100}
+                height={100}
+                className="mx-auto mb-2 object-contain"
+              />
+            ) : (
+              <img
+                src="/download.png"
+                alt="Upload"
+                className="mx-auto mb-2 w-12 h-12"
+              />
+            )}
+            <span className="text-blue-600">
+              {logoPreview ? "Change logo" : "Drop your logo here, or browse"}
+            </span>
+            <p className="text-xs text-gray-500 mt-1">
+              Support: JPG, PNG, WebP
+            </p>
+          </label>
+        </div>
+        {errors.logoFile && (
+          <p className="text-red-500 text-xs mt-1">
+            {errors.logoFile.message as string}
+          </p>
+        )}
       </div>
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="VC Name"
-        className="w-full p-2 border rounded"
-        required
+
+      <Input
+        label="VC Name"
+        {...register("name")}
+        error={errors.name}
+        placeholder="Enter VC name"
       />
-      <textarea
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
+
+      <Input
+        label="VC Description"
+        {...register("description")}
+        error={errors.description}
+        as="textarea"
         placeholder="VC Description"
-        className="w-full p-2 border rounded"
-        required
       />
-      <button
+
+      <Button
         type="submit"
-        className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+        className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg"
       >
         Proceed
-      </button>
+      </Button>
     </form>
   );
 };

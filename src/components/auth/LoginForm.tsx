@@ -1,57 +1,58 @@
 "use client";
 
-import React, { useState, FormEvent } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { login } from "@/lib/api";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import Cookies from "js-cookie";
+import { Input } from "../ui/Input";
+import { Button } from "../ui/Button";
+import { FormError } from "../ui/formError";
+
+const loginSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+});
+
+type LoginFormData = z.infer<typeof loginSchema>;
 
 const LoginForm: React.FC = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const router = useRouter();
 
-  const validateForm = (): boolean => {
-    if (!email || !password) {
-      setError("Please fill in all fields.");
-      return false;
-    }
-    // Additional validation logic if needed
-    return true;
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+  });
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
-
-    if (!validateForm()) return;
-
-    setLoading(true);
+  const onSubmit = async (data: LoginFormData) => {
+    setIsLoading(true);
     setError("");
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-
     try {
-      const response = await fetch(`${apiUrl}/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok && data.success) {
-        // Store the access token in a cookie
-        router.push("/dashboard");
+      const response = await login(data);
+      if (response.success && response.data?.access_token) {
+        Cookies.set("access_token", response.data.access_token, {
+          expires: 7,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "strict",
+        });
+        router.push("/vc");
       } else {
-        setError(data.message || "Invalid credentials");
+        setError(response.message || "Invalid credentials");
       }
     } catch (error) {
-      setError("An error occurred. Please try again later.");
       console.error("Login error:", error);
+      setError("An error occurred. Please try again later.");
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -65,44 +66,32 @@ const LoginForm: React.FC = () => {
             </div>
           </div>
           <form
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             className="w-[400px] flex-col justify-start items-center gap-[30px] flex"
           >
             <div className="self-stretch flex-col justify-start items-start gap-8 flex">
               <div className="w-[400px] flex-col gap-6">
-                <div className="w-full flex-col gap-2">
-                  <label className="text-[#101828] text-sm font-medium font-['Urbanist'] leading-tight">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    className="w-full h-14 p-4 bg-white rounded-md border border-[#d0d5dd]/60 text-[#98a1b2] text-sm font-normal font-['Urbanist'] leading-tight"
-                    placeholder="Enter Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-                <div className="w-full flex-col gap-2">
-                  <label className="text-[#101828] text-sm font-medium font-['Urbanist'] leading-tight">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    className="w-full h-14 p-4 bg-white rounded-md border border-[#d0d5dd]/60 text-[#98a1b2] text-sm font-normal font-['Urbanist'] leading-tight"
-                    placeholder="Enter Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
+                <Input
+                  label="Email"
+                  type="email"
+                  {...register("email")}
+                  error={errors.email}
+                />
+                <Input
+                  label="Password"
+                  type="password"
+                  {...register("password")}
+                  error={errors.password}
+                />
               </div>
-              <button
+              <Button
                 type="submit"
                 className="w-full h-[55px] bg-indigo-600 rounded-lg text-white text-base font-semibold font-['Urbanist'] leading-normal flex justify-center items-center"
-                disabled={loading}
+                disabled={isLoading}
               >
-                {loading ? "Signing in..." : "SIGN IN"}
-              </button>
-              {error && <p className="text-red-600 text-center">{error}</p>}
+                {isLoading ? "Signing in..." : "SIGN IN"}
+              </Button>
+              {error && <FormError message={error} />}
             </div>
             <p className="text-center text-sm text-gray-600">
               Create an account?{" "}

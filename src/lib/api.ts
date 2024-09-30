@@ -1,4 +1,8 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export interface SignUpData {
   username: string;
@@ -7,7 +11,8 @@ export interface SignUpData {
   accountType: string;
 }
 
-export interface VCData {
+interface VCData {
+  id: string;
   name: string;
   description: string;
   logoBase64: string;
@@ -68,59 +73,140 @@ export interface ProjectData {
   partnersAndInvestors: Partner[];
   projectSocials: ProjectSocials;
 }
+export interface VCProfile {
+  name: string;
+  description: string;
+  logoBase64: string;
+  subscriptionFee: string;
+  tags: string[];
+  kycDone: boolean;
+  projects: { id: string; name: string }[];
+}
 
 interface ApiResponse<T> {
-  data: T;
+  success: boolean;
   message: string;
+  data: T;
 }
 
 interface CreateVCResponse {
   vcId: string;
 }
 
-async function fetchApi<T>(
-  url: string,
-  method: string,
-  data: unknown
-): Promise<ApiResponse<T>> {
-  const response = await fetch(`${API_URL}${url}`, {
-    method,
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-
-  return await response.json();
+interface DecodedToken {
+  user: {
+    id: string;
+  };
+  iat: number;
 }
 
-export const signUp = (
+const api: AxiosInstance = axios.create({
+  baseURL: API_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+// Request interceptor for adding auth token
+api.interceptors.request.use(
+  (config) => {
+    const token = Cookies.get("access_token");
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Response interceptor for handling errors
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response) {
+      console.error("API Error:", error.response.data);
+      throw new Error(error.response.data.message || "An error occurred");
+    } else if (error.request) {
+      console.error("No response received:", error.request);
+      throw new Error("No response received from server");
+    } else {
+      console.error("Error setting up request:", error.message);
+      throw error;
+    }
+  }
+);
+
+export const signUp = async (
   data: SignUpData
-): Promise<ApiResponse<{ user: SignUpData }>> => {
-  return fetchApi<{ user: SignUpData }>("/api/auth/signup", "POST", data);
+): Promise<ApiResponse<{ access_token: string }>> => {
+  const response = await api.post<ApiResponse<{ access_token: string }>>(
+    "api/auth/signup",
+    data
+  );
+  return response.data;
 };
 
 export const createVC = async (
   data: VCData
 ): Promise<ApiResponse<CreateVCResponse>> => {
   try {
-    const response = await fetchApi<CreateVCResponse>(
+    console.log("Calling createVC API with data:", data);
+    const response = await api.post<ApiResponse<CreateVCResponse>>(
       "/api/vc/new",
-      "POST",
       data
     );
-    console.log("createVC response:", response);
-    return response;
-  } catch (error: any) {
-    console.error("Error in createVC:", error);
+    console.log("createVC API response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error in createVC API call:", error);
     throw error;
   }
 };
 
 export const createProject = (
   data: ProjectData
-): Promise<ApiResponse<{ project: ProjectData }>> => {
-  return fetchApi<{ project: ProjectData }>("/api/project/new", "POST", data);
+): Promise<AxiosResponse<ApiResponse<{ project: ProjectData }>>> => {
+  return api.post<ApiResponse<{ project: ProjectData }>>(
+    "api/project/new",
+    data
+  );
+};
+
+export interface LoginData {
+  email: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  success: boolean;
+  message: string;
+  data?: {
+    access_token: string;
+  };
+}
+
+export const login = async (data: LoginData): Promise<LoginResponse> => {
+  const response = await api.post<LoginResponse>("api/auth/login", data);
+  return response.data;
+};
+
+// Add this function to the existing api.ts file
+export const getVCProfile = async (): Promise<ApiResponse<VCProfile>> => {
+  try {
+    const token = Cookies.get("access_token");
+    if (!token) {
+      throw new Error("No access token found");
+    }
+
+    const decodedToken = jwtDecode<DecodedToken>(token);
+    const vcId = decodedToken.user.id;
+
+    const response = await api.get<ApiResponse<VCProfile>>(
+      `/api/vc/${vcId}/profile`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching VC profile:", error);
+    throw error;
+  }
 };
