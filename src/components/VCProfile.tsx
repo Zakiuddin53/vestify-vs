@@ -5,10 +5,28 @@ import { getVCProfile, VCProfile } from "@/lib/api";
 import { Button } from "./ui/Button";
 
 const VCProfilePage: React.FC = () => {
-  const [profile, setProfile] = useState<VCProfile | null>(null);
+  // const [profile, setProfile] = useState<VCProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+
+  const profile = {
+    name: "John Doe",
+    account: "123456789",
+    kyc: "Verified",
+    kycDone: "Completed",
+    subscriptionFee: "10.00",
+    description: "This is a description of the VC profile.",
+    logoBase64:
+      "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",
+    projects: [
+      { id: "1", name: "Project 1" },
+      { id: "2", name: "Project 2" },
+      { id: "3", name: "Project 3" },
+    ],
+    tags: ["Tag1", "Tag2", "Tag3"],
+    bigNumber: "9876543210",
+  };
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -16,7 +34,7 @@ const VCProfilePage: React.FC = () => {
         setIsLoading(true);
         const response = await getVCProfile();
         if (response.success) {
-          setProfile(response.data);
+          // setProfile(response.data);
         } else {
           setError(response.message);
         }
@@ -27,7 +45,7 @@ const VCProfilePage: React.FC = () => {
           setError("Failed to fetch VC profile");
         }
         if (err instanceof Error && err.message === "No access token found") {
-          router.push("/login");
+          // router.push("/login");
         }
       } finally {
         setIsLoading(false);
@@ -37,9 +55,9 @@ const VCProfilePage: React.FC = () => {
     fetchProfile();
   }, [router]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!profile) return <div>No profile data available</div>;
+  // if (isLoading) return <div>Loading...</div>;
+  // if (error) return <div>Error: {error}</div>;
+  // if (!profile) return <div>No profile data available</div>;
 
   return (
     <div className="h-[100vh] w-full bg-white justify-start items-start inline-flex overflow-y-scroll">
