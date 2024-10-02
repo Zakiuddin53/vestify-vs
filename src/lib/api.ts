@@ -210,3 +210,16 @@ export const getVCProfile = async (): Promise<ApiResponse<VCProfile>> => {
     throw error;
   }
 };
+
+export const logout = async (): Promise<ApiResponse<null>> => {
+  try {
+    const response = await api.post<ApiResponse<null>>("/api/auth/logout");
+    if (response.data.success) {
+      Cookies.remove("access_token");
+    }
+    return response.data;
+  } catch (error) {
+    console.error("Error during logout:", error);
+    throw error;
+  }
+};
