@@ -118,7 +118,7 @@ const SignupForm: React.FC = () => {
     try {
       await createVC(finalVCData);
       // Handle successful VC creation (e.g., redirect to dashboard)
-      router.push("/vc");
+      router.push("/vc/profile");
     } catch (error) {
       console.error("VC creation error:", error);
       setError("An error occurred while creating the VC profile.");

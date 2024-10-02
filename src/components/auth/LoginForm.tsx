@@ -44,7 +44,7 @@ const LoginForm: React.FC = () => {
           secure: process.env.NODE_ENV === "production",
           sameSite: "strict",
         });
-        router.push("/vc");
+        router.push("/vc/profile");
       } else {
         setError(response.message || "Invalid credentials");
       }

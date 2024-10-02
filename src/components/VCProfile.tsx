@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { getVCProfile, VCProfile } from "@/lib/api";
 import { Button } from "./ui/Button";
+import { useRouter } from "next/navigation";
 
 import { ProfileCard } from "./vcProfileComponents/ProfileCard";
 import { ProjectTable } from "./vcProfileComponents/ProjectTable";
@@ -60,12 +61,22 @@ const VCProfilePage: React.FC = () => {
   );
 };
 
-const Header: React.FC<{ name: string }> = ({ name }) => (
-  <div className="flex justify-between items-center mb-8">
-    <h1 className="text-3xl font-bold">Hi, {name}</h1>
-    <Button className="bg-indigo-600 text-white">Join Now</Button>
-  </div>
-);
+const Header: React.FC<{ name: string }> = ({ name }) => {
+  const router = useRouter();
+
+  const handleAddProject = () => {
+    router.push("/vc/add-project");
+  };
+
+  return (
+    <div className="flex justify-between items-center mb-8">
+      <h1 className="text-3xl font-bold">Hi, {name}</h1>
+      <Button className="bg-indigo-600 text-white" onClick={handleAddProject}>
+        Add Project
+      </Button>
+    </div>
+  );
+};
 
 const KYCStatus: React.FC<{ kycDone: boolean }> = ({ kycDone }) => (
   <ProfileCard title="KYC Status">
