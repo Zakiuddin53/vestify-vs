@@ -80,7 +80,17 @@ export interface VCProfile {
   subscriptionFee: string;
   tags: string[];
   kycDone: boolean;
-  projects: { id: string; name: string }[];
+  fundSize: string;
+
+  projects: {
+    id: string;
+    name: string;
+    pledgeAmount: string;
+    marketCap: string;
+    topGainer: string;
+    raisedAmount: string;
+    ongoingClaim: number;
+  }[];
 }
 
 interface ApiResponse<T> {
@@ -190,7 +200,6 @@ export const login = async (data: LoginData): Promise<LoginResponse> => {
   return response.data;
 };
 
-// Add this function to the existing api.ts file
 export const getVCProfile = async (): Promise<ApiResponse<VCProfile>> => {
   try {
     const token = Cookies.get("access_token");
