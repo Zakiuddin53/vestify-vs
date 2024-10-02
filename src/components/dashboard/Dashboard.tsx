@@ -1,20 +1,25 @@
+// Dashboard.tsx
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { SideNavbar } from "../ui/SideNavbar";
+import { jwtDecode } from "jwt-decode";
+import Cookies from "js-cookie";
+import { getVCProjects } from "../../lib/api";
 import ProjectCard from "../projectComponents/ProjectCard";
+import { Search } from "./Search";
+
+interface DecodedToken {
+  user: {
+    id: string;
+  };
+  iat: number;
+}
 
 interface Project {
   id: string;
   name: string;
   description: string;
   round: string;
-}
-
-interface ApiResponse {
-  data: Project[];
-  success: boolean;
-  message: string;
 }
 
 const Dashboard: React.FC = () => {
@@ -26,23 +31,19 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const vcId = localStorage.getItem("vcId");
-        if (!vcId) {
-          throw new Error("VC ID not found");
+        const token = Cookies.get("access_token");
+        if (!token) {
+          throw new Error("No access token found");
         }
 
-        const response = await fetch(
-          `http://localhost:3000/api/vc/${vcId}/projects`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch projects");
-        }
+        const decodedToken = jwtDecode<DecodedToken>(token);
+        const vcId = decodedToken.user.id;
 
-        const result: ApiResponse = await response.json();
-        if (result.success) {
-          setProjects(result.data);
+        const response = await getVCProjects(vcId);
+        if (response.success) {
+          setProjects(response.data);
         } else {
-          throw new Error(result.message || "Failed to fetch projects");
+          throw new Error(response.message || "Failed to fetch projects");
         }
       } catch (error) {
         console.error("Failed to fetch projects:", error);
@@ -60,31 +61,31 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <SideNavbar />
-      <div className="flex-1 overflow-auto">
-        <div className="p-8">
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold">Dashboard</h1>
-            <div className="flex items-center">
-              <input
-                type="text"
-                placeholder="Search..."
-                className="mr-4 p-2 border rounded"
-              />
+    <div className="flex flex-col min-h-screen bg-white">
+      <header className="border-b border-gray-200">
+        <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center">
+            <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+            <div className="flex items-center space-x-4">
+              <Search />
               <button
                 onClick={handleAddProject}
-                className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+                className="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 flex items-center"
               >
+                <span className="mr-2">+</span>
                 Add New project
               </button>
             </div>
           </div>
+        </div>
+      </header>
 
+      <main className="flex-grow">
+        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           {loading ? (
-            <div>Loading...</div>
+            <div className="text-center py-8">Loading...</div>
           ) : error ? (
-            <div className="text-red-500 mb-4">{error}</div>
+            <div className="text-red-500 mb-4 text-center">{error}</div>
           ) : projects.length === 0 ? (
             <div className="text-center py-8">
               <p className="text-gray-600 mb-4">
@@ -92,14 +93,17 @@ const Dashboard: React.FC = () => {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {projects.map((project) => (
-                <ProjectCard key={project.id} project={project} />
+                <ProjectCard
+                  key={project.id}
+                  project={{ ...project, status: "In Progress", progress: 0 }}
+                />
               ))}
             </div>
           )}
         </div>
-      </div>
+      </main>
     </div>
   );
 };

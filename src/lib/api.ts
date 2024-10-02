@@ -110,6 +110,13 @@ interface DecodedToken {
   iat: number;
 }
 
+export interface Project {
+  id: string;
+  name: string;
+  description: string;
+  round: string;
+}
+
 const api: AxiosInstance = axios.create({
   baseURL: API_URL,
   headers: {
@@ -245,6 +252,20 @@ export const logout = async (): Promise<ApiResponse<null>> => {
     return response.data;
   } catch (error) {
     console.error("Error during logout:", error);
+    throw error;
+  }
+};
+
+export const getVCProjects = async (
+  vcId: string
+): Promise<ApiResponse<Project[]>> => {
+  try {
+    const response = await api.get<ApiResponse<Project[]>>(
+      `/api/vc/${vcId}/projects`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching VC projects:", error);
     throw error;
   }
 };
