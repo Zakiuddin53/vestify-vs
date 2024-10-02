@@ -31,11 +31,11 @@ const OurDeals: React.FC<OurDealsProps> = ({ onComplete }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-2xl font-bold mb-4">Our Deals</h2>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <h2 className="text-2xl font-bold mb-6 text-black">Our Deals</h2>
 
       <div>
-        <label htmlFor="minimum" className="block mb-1">
+        <label htmlFor="minimum" className="block mb-2 font-medium text-black">
           Minimum
         </label>
         <input
@@ -45,13 +45,13 @@ const OurDeals: React.FC<OurDealsProps> = ({ onComplete }) => {
           value={minimum}
           onChange={(e) => setMinimum(e.target.value)}
           placeholder="Enter Minimum"
-          className="w-full p-2 border rounded"
+          className="w-full p-3 border border-gray-300 rounded-md"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="maximum" className="block mb-1">
+        <label htmlFor="maximum" className="block mb-2 font-medium text-black">
           Maximum
         </label>
         <input
@@ -61,20 +61,23 @@ const OurDeals: React.FC<OurDealsProps> = ({ onComplete }) => {
           value={maximum}
           onChange={(e) => setMaximum(e.target.value)}
           placeholder="Enter maximum"
-          className="w-full p-2 border rounded"
+          className="w-full p-3 border border-gray-300 rounded-md"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="acceptedTokens" className="block mb-1">
+        <label
+          htmlFor="acceptedTokens"
+          className="block mb-2 font-medium text-black"
+        >
           Select tokens accepted
         </label>
         <select
           id="acceptedTokens"
           value={acceptedTokens}
           onChange={(e) => setAcceptedTokens(e.target.value)}
-          className="w-full p-2 border rounded"
+          className="w-full p-3 border border-gray-300 rounded-md"
           required
         >
           <option value="">Select token accepted</option>
@@ -86,7 +89,7 @@ const OurDeals: React.FC<OurDealsProps> = ({ onComplete }) => {
       </div>
 
       <div>
-        <label htmlFor="poolFee" className="block mb-1">
+        <label htmlFor="poolFee" className="block mb-2 font-medium text-black">
           Pool Fee
         </label>
         <input
@@ -96,14 +99,14 @@ const OurDeals: React.FC<OurDealsProps> = ({ onComplete }) => {
           value={poolFee}
           onChange={(e) => setPoolFee(e.target.value)}
           placeholder="Enter Pool fee"
-          className="w-full p-2 border rounded"
+          className="w-full p-3 border border-gray-300 rounded-md"
           required
         />
       </div>
 
       <button
         type="submit"
-        className="w-full py-2 px-4 bg-purple-600 text-white rounded-md hover:bg-purple-700"
+        className="w-full py-3 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
       >
         Proceed
       </button>

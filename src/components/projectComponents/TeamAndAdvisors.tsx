@@ -44,13 +44,16 @@ const TeamAndAdvisors: React.FC<TeamAndAdvisorsProps> = ({ onComplete }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-2xl font-bold mb-4">Team & Advisors</h2>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <h2 className="text-2xl font-bold mb-6 text-black">Team & Advisors</h2>
 
       {teamMembers.map((member, index) => (
-        <div key={index} className="space-y-3 pb-4 border-b">
+        <div key={index} className="space-y-4 pb-6 border-b">
           <div>
-            <label htmlFor={`name-${index}`} className="block mb-1">
+            <label
+              htmlFor={`name-${index}`}
+              className="block mb-2 font-medium text-black"
+            >
               Name
             </label>
             <input
@@ -59,13 +62,16 @@ const TeamAndAdvisors: React.FC<TeamAndAdvisorsProps> = ({ onComplete }) => {
               value={member.name}
               onChange={(e) => handleInputChange(index, "name", e.target.value)}
               placeholder="Enter name"
-              className="w-full p-2 border rounded"
+              className="w-full p-3 border border-gray-300 rounded-md"
               required
             />
           </div>
 
           <div>
-            <label htmlFor={`title-${index}`} className="block mb-1">
+            <label
+              htmlFor={`title-${index}`}
+              className="block mb-2 font-medium text-black"
+            >
               Title
             </label>
             <input
@@ -76,13 +82,16 @@ const TeamAndAdvisors: React.FC<TeamAndAdvisorsProps> = ({ onComplete }) => {
                 handleInputChange(index, "title", e.target.value)
               }
               placeholder="Enter title"
-              className="w-full p-2 border rounded"
+              className="w-full p-3 border border-gray-300 rounded-md"
               required
             />
           </div>
 
           <div>
-            <label htmlFor={`description-${index}`} className="block mb-1">
+            <label
+              htmlFor={`description-${index}`}
+              className="block mb-2 font-medium text-black"
+            >
               Brief Description
             </label>
             <textarea
@@ -92,7 +101,7 @@ const TeamAndAdvisors: React.FC<TeamAndAdvisorsProps> = ({ onComplete }) => {
                 handleInputChange(index, "description", e.target.value)
               }
               placeholder="Enter brief description"
-              className="w-full p-2 border rounded"
+              className="w-full p-3 border border-gray-300 rounded-md"
               rows={3}
               required
             />
@@ -103,14 +112,14 @@ const TeamAndAdvisors: React.FC<TeamAndAdvisorsProps> = ({ onComplete }) => {
       <button
         type="button"
         onClick={addTeamMember}
-        className="text-purple-600 underline"
+        className="text-indigo-600 underline"
       >
         Add another team member
       </button>
 
       <button
         type="submit"
-        className="w-full py-2 px-4 bg-purple-600 text-white rounded-md hover:bg-purple-700"
+        className="w-full py-3 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
       >
         Proceed
       </button>

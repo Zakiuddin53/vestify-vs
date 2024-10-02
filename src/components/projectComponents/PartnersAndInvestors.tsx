@@ -66,13 +66,18 @@ const PartnersAndInvestors: React.FC<PartnersAndInvestorsProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-2xl font-bold mb-4">Partners & Investors</h2>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <h2 className="text-2xl font-bold mb-6 text-black">
+        Partners & Investors
+      </h2>
 
       {partners.map((partner, index) => (
-        <div key={index} className="space-y-3 pb-4 border-b">
+        <div key={index} className="space-y-4 pb-6 border-b">
           <div>
-            <label htmlFor={`partnerName-${index}`} className="block mb-1">
+            <label
+              htmlFor={`partnerName-${index}`}
+              className="block mb-2 font-medium text-black"
+            >
               Partner name
             </label>
             <input
@@ -81,13 +86,16 @@ const PartnersAndInvestors: React.FC<PartnersAndInvestorsProps> = ({
               value={partner.name}
               onChange={(e) => handleNameChange(index, e.target.value)}
               placeholder="Enter partner name"
-              className="w-full p-2 border rounded"
+              className="w-full p-3 border border-gray-300 rounded-md"
               required
             />
           </div>
 
           <div>
-            <label htmlFor={`logoUpload-${index}`} className="block mb-1">
+            <label
+              htmlFor={`logoUpload-${index}`}
+              className="block mb-2 font-medium text-black"
+            >
               Partner Logo
             </label>
             <div className="flex items-center space-x-2">
@@ -131,14 +139,14 @@ const PartnersAndInvestors: React.FC<PartnersAndInvestorsProps> = ({
       <button
         type="button"
         onClick={addPartner}
-        className="text-purple-600 underline"
+        className="text-indigo-600 underline"
       >
         Add another partner
       </button>
 
       <button
         type="submit"
-        className="w-full py-2 px-4 bg-purple-600 text-white rounded-md hover:bg-purple-700"
+        className="w-full py-3 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
       >
         Proceed
       </button>

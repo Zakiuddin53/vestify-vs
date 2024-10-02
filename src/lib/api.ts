@@ -173,12 +173,28 @@ export const createVC = async (
   }
 };
 
-export const createProject = (
-  data: ProjectData
+export const createProject = async (
+  data: Omit<ProjectData, "info"> & { info: Omit<ProjectInfo, "vcId"> }
 ): Promise<AxiosResponse<ApiResponse<{ project: ProjectData }>>> => {
+  const token = Cookies.get("access_token");
+  if (!token) {
+    throw new Error("No access token found");
+  }
+
+  const decodedToken = jwtDecode<DecodedToken>(token);
+  const vcId = decodedToken.user.id;
+
+  const projectData: ProjectData = {
+    ...data,
+    info: {
+      ...data.info,
+      vcId,
+    },
+  };
+
   return api.post<ApiResponse<{ project: ProjectData }>>(
     "api/project/new",
-    data
+    projectData
   );
 };
 

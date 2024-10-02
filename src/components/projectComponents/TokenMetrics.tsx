@@ -25,7 +25,7 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
   const formatDate = (dateString: string): string => {
     if (!dateString) return "";
     const date = new Date(dateString);
-    return date.toISOString(); // This will format the date as "2024-08-28T12:20:13.264Z"
+    return date.toISOString();
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -43,11 +43,14 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-2xl font-bold">Token Metrics</h2>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <h2 className="text-2xl font-bold mb-6 text-black">Token Metrics</h2>
 
       <div>
-        <label htmlFor="allocation" className="block mb-1">
+        <label
+          htmlFor="allocation"
+          className="block mb-2 font-medium text-black"
+        >
           Allocation
         </label>
         <input
@@ -56,13 +59,13 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
           value={allocation}
           onChange={(e) => setAllocation(e.target.value)}
           placeholder="Enter Allocation"
-          className="w-full py-2 px-4 border rounded-md"
+          className="w-full p-3 border border-gray-300 rounded-md"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="fdv" className="block mb-1">
+        <label htmlFor="fdv" className="block mb-2 font-medium text-black">
           FDV
         </label>
         <input
@@ -71,13 +74,13 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
           value={fdv}
           onChange={(e) => setFdv(e.target.value)}
           placeholder="Enter FDV"
-          className="w-full py-2 px-4 border rounded-md"
+          className="w-full p-3 border border-gray-300 rounded-md"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="price" className="block mb-1">
+        <label htmlFor="price" className="block mb-2 font-medium text-black">
           Price
         </label>
         <input
@@ -86,13 +89,16 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           placeholder="Enter price"
-          className="w-full py-2 px-4 border rounded-md"
+          className="w-full p-3 border border-gray-300 rounded-md"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="tgeUnlock" className="block mb-1">
+        <label
+          htmlFor="tgeUnlock"
+          className="block mb-2 font-medium text-black"
+        >
           TGE Unlock
         </label>
         <input
@@ -101,13 +107,13 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
           value={tgeUnlock}
           onChange={(e) => setTgeUnlock(e.target.value)}
           placeholder="Enter TGE unlock"
-          className="w-full py-2 px-4 border rounded-md"
+          className="w-full p-3 border border-gray-300 rounded-md"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="tge" className="block mb-1">
+        <label htmlFor="tge" className="block mb-2 font-medium text-black">
           TGE Date
         </label>
         <input
@@ -115,13 +121,13 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
           type="datetime-local"
           value={tge}
           onChange={(e) => setTge(e.target.value)}
-          className="w-full py-2 px-4 border rounded-md"
+          className="w-full p-3 border border-gray-300 rounded-md"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="vesting" className="block mb-1">
+        <label htmlFor="vesting" className="block mb-2 font-medium text-black">
           Vesting Date
         </label>
         <input
@@ -129,14 +135,14 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
           type="datetime-local"
           value={vesting}
           onChange={(e) => setVesting(e.target.value)}
-          className="w-full py-2 px-4 border rounded-md"
+          className="w-full p-3 border border-gray-300 rounded-md"
           required
         />
       </div>
 
       <button
         type="submit"
-        className="w-full py-2 px-4 bg-purple-600 text-white rounded-md hover:bg-purple-700"
+        className="w-full py-3 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
       >
         Proceed
       </button>

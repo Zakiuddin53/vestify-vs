@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import BasicInformation from "./BasicInformation";
 import TokenMetrics from "./TokenMetrics";
@@ -8,14 +8,16 @@ import TeamAndAdvisors from "./TeamAndAdvisors";
 import PartnersAndInvestors from "./PartnersAndInvestors";
 import Socials from "./Socials";
 import { createProject, ProjectData } from "@/lib/api";
+import StepIndicator from "./StepIndicator";
 
 const ProjectCreationForm: React.FC = () => {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [projectData, setProjectData] = useState<ProjectData>({
+  const [projectData, setProjectData] = useState<
+    Omit<ProjectData, "info"> & { info: Omit<ProjectData["info"], "vcId"> }
+  >({
     info: {
-      vcId: "",
       name: "",
       category: "",
       description: "",
@@ -41,18 +43,19 @@ const ProjectCreationForm: React.FC = () => {
   });
   const router = useRouter();
 
-  useEffect(() => {
-    const storedVcId = localStorage.getItem("vcId") || "";
-    setProjectData((prevData) => ({
-      ...prevData,
-      info: {
-        ...prevData.info,
-        vcId: storedVcId,
-      },
-    }));
-  }, []);
+  const steps = [
+    { name: "Basic Information", component: BasicInformation },
+    { name: "Token Metrics", component: TokenMetrics },
+    { name: "Our Deals", component: OurDeals },
+    { name: "Team & Advisor", component: TeamAndAdvisors },
+    { name: "Partners & Investors", component: PartnersAndInvestors },
+    { name: "Socials", component: Socials },
+    { name: "Finish", component: null },
+  ];
 
-  const handleStepComplete = (stepData: Partial<ProjectData>) => {
+  const CurrentStepComponent = steps[step - 1].component;
+
+  const handleStepComplete = (stepData: Partial<typeof projectData>) => {
     setProjectData((prev) => ({ ...prev, ...stepData }));
     setStep((prevStep) => prevStep + 1);
   };
@@ -62,7 +65,7 @@ const ProjectCreationForm: React.FC = () => {
     setError(null);
     try {
       await createProject(projectData);
-      router.push("/vc");
+      router.push("/vc/profile");
     } catch (error) {
       console.error("Project creation error:", error);
       setError(
@@ -75,63 +78,28 @@ const ProjectCreationForm: React.FC = () => {
 
   return (
     <div className="max-w-2xl mx-auto mt-10">
-      {step === 1 && (
-        <BasicInformation
-          vcId={projectData.info.vcId}
-          onComplete={(data) => handleStepComplete({ info: data.info })}
-        />
+      <h1 className="text-3xl font-bold mb-6">Add new Project</h1>
+      <div className="mb-8">
+        <StepIndicator currentStep={step} steps={steps} />
+      </div>
+      {CurrentStepComponent && (
+        <CurrentStepComponent onComplete={(data) => handleStepComplete(data)} />
       )}
-      {step === 2 && (
-        <TokenMetrics
-          onComplete={(data) =>
-            handleStepComplete({ tokenMetrics: data.tokenMetrics })
-          }
-        />
-      )}
-      {step === 3 && (
-        <OurDeals
-          onComplete={(data) => handleStepComplete({ deals: data.deals })}
-        />
-      )}
-      {step === 4 && (
-        <TeamAndAdvisors
-          onComplete={(data) =>
-            handleStepComplete({ teamAndAdvisors: data.teamAndAdvisors })
-          }
-        />
-      )}
-      {step === 5 && (
-        <PartnersAndInvestors
-          onComplete={(data) =>
-            handleStepComplete({
-              partnersAndInvestors: data.partnersAndInvestors,
-            })
-          }
-        />
-      )}
-      {step === 6 && (
-        <Socials
-          onComplete={(data) =>
-            handleStepComplete({ projectSocials: data.projectSocials })
-          }
-        />
-      )}
-
-      {step === 7 && (
-        <>
+      {step === steps.length && (
+        <div className="mt-6">
           {error && <p className="text-red-500 mb-4">{error}</p>}
           <button
             onClick={handleSubmit}
             disabled={isLoading}
-            className={`w-full py-2 px-4 bg-purple-600 text-white rounded-md ${
+            className={`w-full py-3 px-4 bg-indigo-600 text-white rounded-md ${
               isLoading
                 ? "opacity-50 cursor-not-allowed"
-                : "hover:bg-purple-700"
+                : "hover:bg-indigo-700"
             }`}
           >
             {isLoading ? "Creating Project..." : "Finish"}
           </button>
-        </>
+        </div>
       )}
     </div>
   );
