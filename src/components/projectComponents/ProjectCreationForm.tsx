@@ -10,8 +10,10 @@ import Socials from "./Socials";
 import { createProject, ProjectData } from "@/lib/api";
 import StepIndicator from "./StepIndicator";
 
-const ProjectCreationForm: React.FC = () => {
-  const [step, setStep] = useState(1);
+const ProjectCreationForm: React.FC<{
+  step: number;
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+}> = ({ step, setStep }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [projectData, setProjectData] = useState<
@@ -77,30 +79,33 @@ const ProjectCreationForm: React.FC = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-10">
-      <h1 className="text-3xl font-bold mb-6">Add new Project</h1>
+    <div className="max-w-xl mx-auto mt-10 px-4">
       <div className="mb-8">
         <StepIndicator currentStep={step} steps={steps} />
       </div>
-      {CurrentStepComponent && (
-        <CurrentStepComponent onComplete={(data) => handleStepComplete(data)} />
-      )}
-      {step === steps.length && (
-        <div className="mt-6">
-          {error && <p className="text-red-500 mb-4">{error}</p>}
-          <button
-            onClick={handleSubmit}
-            disabled={isLoading}
-            className={`w-full py-3 px-4 bg-indigo-600 text-white rounded-md ${
-              isLoading
-                ? "opacity-50 cursor-not-allowed"
-                : "hover:bg-indigo-700"
-            }`}
-          >
-            {isLoading ? "Creating Project..." : "Finish"}
-          </button>
-        </div>
-      )}
+      <div className="bg-white border border-gray-200 rounded-lg p-6">
+        {CurrentStepComponent && (
+          <CurrentStepComponent
+            onComplete={(data) => handleStepComplete(data)}
+          />
+        )}
+        {step === steps.length && (
+          <div className="mt-6">
+            {error && <p className="text-red-500 mb-4">{error}</p>}
+            <button
+              onClick={handleSubmit}
+              disabled={isLoading}
+              className={`w-full py-3 px-4 bg-indigo-600 text-white rounded-md text-sm font-medium ${
+                isLoading
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-indigo-700"
+              }`}
+            >
+              {isLoading ? "Creating Project..." : "Finish"}
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

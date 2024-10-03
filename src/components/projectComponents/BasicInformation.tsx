@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Dropdown from "../ui/Dropdown";
 
 interface BasicInformationProps {
   onComplete: (data: {
@@ -31,14 +32,26 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ onComplete }) => {
     });
   };
 
+  const categoryOptions = ["DeFi", "NFT", "GameFi", "Infrastructure"];
+  const roundOptions = [
+    "Pre Seed",
+    "Seed",
+    "Private 1",
+    "Private 2",
+    "Private 3",
+    "Public",
+  ];
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <h2 className="text-2xl font-bold mb-6 text-black">Basic Information</h2>
+    <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6  mx-auto">
+      <h2 className="text-2xl font-bold text-center mb-6 text-black">
+        Basic Information
+      </h2>
 
       <div>
         <label
           htmlFor="projectName"
-          className="block mb-2 font-medium text-black"
+          className="block mb-2 text-sm font-medium text-gray-700"
         >
           Project Name
         </label>
@@ -48,7 +61,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ onComplete }) => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter Project name"
-          className="w-full p-3 border border-gray-300 rounded-md"
+          className="w-full p-3 border border-gray-300 rounded-md text-sm text-gray-500"
           required
         />
       </div>
@@ -56,7 +69,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ onComplete }) => {
       <div>
         <label
           htmlFor="projectDescription"
-          className="block mb-2 font-medium text-black"
+          className="block mb-2 text-sm font-medium text-gray-700"
         >
           Project Description
         </label>
@@ -65,7 +78,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ onComplete }) => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Project Description"
-          className="w-full p-3 border border-gray-300 rounded-md"
+          className="w-full p-3 border border-gray-300 rounded-md text-sm text-gray-500"
           rows={4}
           required
         />
@@ -74,52 +87,36 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ onComplete }) => {
       <div>
         <label
           htmlFor="projectCategory"
-          className="block mb-2 font-medium text-black"
+          className="block mb-2 text-sm font-medium text-gray-700"
         >
           Project Category
         </label>
-        <select
-          id="projectCategory"
+        <Dropdown
+          options={categoryOptions}
           value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-md text-black"
-          required
-        >
-          <option value="">Select Project category</option>
-          <option value="DeFi">DeFi</option>
-          <option value="NFT">NFT</option>
-          <option value="GameFi">GameFi</option>
-          <option value="Infrastructure">Infrastructure</option>
-        </select>
+          onChange={setCategory}
+          placeholder="Select Project category"
+        />
       </div>
 
       <div>
         <label
           htmlFor="projectRound"
-          className="block mb-2 font-medium text-black"
+          className="block mb-2 text-sm font-medium text-gray-700"
         >
           Project Round
         </label>
-        <select
-          id="projectRound"
+        <Dropdown
+          options={roundOptions}
           value={round}
-          onChange={(e) => setRound(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-md text-black"
-          required
-        >
-          <option value="">Select Project round</option>
-          <option value="PRE_SEED">Pre Seed</option>
-          <option value="SEED">Seed</option>
-          <option value="PRIVATE_1">Private 1</option>
-          <option value="PRIVATE_2">Private 2</option>
-          <option value="PRIVATE_3">Private 3</option>
-          <option value="PUBLIC">Public</option>
-        </select>
+          onChange={setRound}
+          placeholder="Select Project round"
+        />
       </div>
 
       <button
         type="submit"
-        className="w-full py-3 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+        className="w-full py-3 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 text-sm font-medium"
       >
         Proceed
       </button>

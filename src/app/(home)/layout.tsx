@@ -5,10 +5,10 @@ import { SideNavbar } from "@/components/ui/SideNavbar";
 export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className="flex">
+      <body className="flex h-screen overflow-hidden">
         <SideNavbar />
-        <main className="flex flex-row overflow-auto bg-gray-50 w-full">
-          <div className="flex-1">{children}</div>
+        <main className="flex-1 overflow-auto bg-gray-50">
+          <div className="h-full">{children}</div>
         </main>
       </body>
     </html>
