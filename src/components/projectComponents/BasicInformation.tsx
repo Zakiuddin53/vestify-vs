@@ -34,12 +34,12 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ onComplete }) => {
 
   const categoryOptions = ["DeFi", "NFT", "GameFi", "Infrastructure"];
   const roundOptions = [
-    "Pre Seed",
-    "Seed",
-    "Private 1",
-    "Private 2",
-    "Private 3",
-    "Public",
+    "PRE SEED",
+    "SEED",
+    "PRIVATE 1",
+    "PRIVATE 2",
+    "PRIVATE 3",
+    "PUBLIC",
   ];
 
   return (

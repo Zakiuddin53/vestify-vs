@@ -57,7 +57,7 @@ const Dashboard: React.FC = () => {
   }, []);
 
   const handleAddProject = () => {
-    router.push("/create-project");
+    router.push("/vc/add-project");
   };
 
   return (
