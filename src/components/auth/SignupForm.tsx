@@ -10,6 +10,7 @@ import VCTagsForm from "./VCTagsForm";
 import imageCompression from "browser-image-compression";
 import InitialSignupForm from "./InitialSignupForm";
 import { jwtDecode } from "jwt-decode";
+import Link from "next/link";
 
 interface TokenPayload {
   user?: {
@@ -117,7 +118,6 @@ const SignupForm: React.FC = () => {
 
     try {
       await createVC(finalVCData);
-      // Handle successful VC creation (e.g., redirect to dashboard)
       router.push("/vc/profile");
     } catch (error) {
       console.error("VC creation error:", error);
@@ -128,22 +128,8 @@ const SignupForm: React.FC = () => {
   };
 
   return (
-    <div className="w-[456px] px-7 py-8 bg-white rounded-[10px] border border-[#d0d4dd]">
+    <div className="w-full max-w-md">
       {error && <FormError message={error} />}
-      {step > 1 && (
-        <>
-          <div className="w-full mb-4 bg-gray-200 rounded-full h-2">
-            <div
-              className="bg-green-500 h-2 rounded-full"
-              style={{ width: `${(step - 1) * 50}%` }}
-            ></div>
-          </div>
-          <div className="text-right text-sm text-gray-500 mb-4">{`${
-            (step - 1) * 50
-          }%`}</div>
-          <h2 className="text-2xl font-bold mb-6">Add new VC</h2>
-        </>
-      )}
       {step === 1 && <InitialSignupForm onSubmit={onInitialSignup} />}
       {step === 2 && <VCInfoForm onSubmit={handleVCInfoSubmit} />}
       {step === 3 && (
@@ -152,6 +138,14 @@ const SignupForm: React.FC = () => {
           isLoading={isLoading}
           userId={userData.id || ""}
         />
+      )}
+      {step === 1 && (
+        <p className="mt-4 text-center text-gray-700">
+          Already have an account?{" "}
+          <Link href="/auth/login" className="text-blue-500 hover:underline">
+            Log in
+          </Link>
+        </p>
       )}
     </div>
   );
