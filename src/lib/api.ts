@@ -141,14 +141,11 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response) {
-      console.error("API Error:", error.response.data);
       throw new Error(error.response.data.message || "An error occurred");
     } else if (error.request) {
-      console.error("No response received:", error.request);
       throw new Error("No response received from server");
     } else {
-      console.error("Error setting up request:", error.message);
-      throw error;
+      throw new Error("Error setting up request");
     }
   }
 );
@@ -266,6 +263,51 @@ export const getVCProjects = async (
     return response.data;
   } catch (error) {
     console.error("Error fetching VC projects:", error);
+    throw error;
+  }
+};
+
+export interface ProjectDetails {
+  project: {
+    name: string;
+    description: string;
+    round: string;
+    categories: string[];
+    tokensReceived: string;
+  };
+  token: {
+    allocation: string;
+    vesting: string;
+    tge: string;
+    tgeUnlock: string;
+    price: string;
+  };
+  socialLink: {
+    medium?: string;
+    discord?: string;
+    x?: string;
+    telegram?: string;
+  };
+  teamAndAdvisors: Array<{
+    name: string;
+    imgBase64: string;
+  }>;
+  partnersAndInvestors: Array<{
+    name: string;
+    logoBase64: string;
+  }>;
+}
+
+export const getProjectDetails = async (
+  projectId: string
+): Promise<ApiResponse<ProjectDetails>> => {
+  try {
+    const response = await api.get<ApiResponse<ProjectDetails>>(
+      `/api/project/${projectId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching project details:", error);
     throw error;
   }
 };

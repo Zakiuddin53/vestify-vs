@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaTwitter } from "react-icons/fa";
+import Link from "next/link";
 
 interface ProjectCardProps {
   project: {
@@ -73,9 +74,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         </span>
       </div>
 
-      <button className="w-full bg-indigo-600 text-white font-semibold py-2 px-4 rounded-full hover:bg-indigo-700 transition duration-300">
+      <Link
+        href={`/project/${project.id}`}
+        className="w-full bg-indigo-600 text-white font-semibold py-2 px-4 rounded-full hover:bg-indigo-700 transition duration-300 text-center"
+      >
         Details →
-      </button>
+      </Link>
     </div>
   );
 };
