@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, User, Settings, LogOut, Plus } from "lucide-react";
+import { User, Settings, LogOut, Plus } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/Button";
@@ -14,6 +14,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { logout } from "@/lib/api";
 import { useRouter } from "next/navigation";
+import Logo from "@/components/ui/Icons/Logo";
+import Capital from "@/components/ui/Icons/Capital";
+import Home from "@/components/ui/Icons/Home";
 
 export function SideNavbar() {
   const router = useRouter();
@@ -32,47 +35,34 @@ export function SideNavbar() {
   };
 
   return (
-    <nav className="AppSidebar w-20 h-screen px-4 pt-6 pb-5 bg-indigo-600 flex-col justify-between items-start inline-flex">
-      <div className="Frame self-stretch flex-col justify-start items-center gap-8 inline-flex">
+    <nav className="AppSidebar w-20 h-screen bg-indigo-600 flex flex-col justify-between items-center py-6 px-2">
+      <div className="flex flex-col items-center space-y-8">
         {/* Logo */}
-        <div className="Logomark w-8 h-8 bg-white rounded-xl shadow border border-slate-200 flex justify-center items-center">
-          <svg
-            className="h-6 w-6 text-indigo-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M13 10V3L4 14h7v7l9-11h-7z"
-            />
-          </svg>
+        <div className="w-12 h-12 flex justify-center items-center">
+          <Logo />
         </div>
 
-        <div className="Frame flex-col justify-start items-start gap-4 flex">
+        <div className="flex flex-col space-y-6">
           {/* Home Icon */}
           <Link href="/dashboard">
             <Button
               variant="ghost"
               size="icon"
-              className="ButtonIcon w-12 h-12 p-4 rounded-full justify-center items-center gap-2.5 inline-flex text-white hover:bg-indigo-500"
+              className="w-12 h-12 rounded-full text-white hover:bg-indigo-500 transition-colors"
             >
-              <Home className="w-6 h-6" />
+              <Home />
               <span className="sr-only">Home</span>
             </Button>
           </Link>
 
-          {/* Add another icon button if needed */}
+          {/* Capital Icon */}
           <Button
             variant="ghost"
             size="icon"
-            className="ButtonIcon w-12 h-12 p-4 rounded-full justify-center items-center gap-2.5 inline-flex text-white hover:bg-indigo-500"
+            className="w-12 h-12 rounded-full text-white hover:bg-indigo-500 transition-colors"
           >
-            <Plus className="w-6 h-6" />
-            <span className="sr-only">Add</span>
+            <Capital />
+            <span className="sr-only">Capital</span>
           </Button>
 
           {/* Profile Icon */}
@@ -80,7 +70,7 @@ export function SideNavbar() {
             <Button
               variant="ghost"
               size="icon"
-              className="ButtonIcon w-12 h-12 p-4 bg-indigo-500 rounded-full justify-center items-center gap-2.5 inline-flex text-white"
+              className="w-12 h-12 bg-indigo-500 rounded-full text-white hover:bg-indigo-400 transition-colors"
             >
               <User className="w-6 h-6" />
               <span className="sr-only">Profile</span>
@@ -89,14 +79,14 @@ export function SideNavbar() {
         </div>
       </div>
 
-      <div className="Frame self-stretch flex-col justify-start items-start gap-4 inline-flex">
+      <div className="flex flex-col space-y-4">
         {/* Settings Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
               size="icon"
-              className="ButtonIcon w-12 h-12 p-4 rounded-full justify-center items-center gap-2.5 inline-flex text-white hover:bg-indigo-500"
+              className="w-12 h-12 rounded-full text-white hover:bg-indigo-500 transition-colors"
             >
               <Settings className="w-6 h-6" />
               <span className="sr-only">Settings</span>
@@ -120,7 +110,7 @@ export function SideNavbar() {
               size="icon"
               className="p-0 hover:bg-transparent"
             >
-              <Avatar className="w-6 h-6">
+              <Avatar className="w-10 h-10">
                 <AvatarImage src="/11.webp" alt="@username" />
                 <AvatarFallback>UN</AvatarFallback>
               </Avatar>

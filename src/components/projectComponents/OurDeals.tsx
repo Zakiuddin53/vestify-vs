@@ -84,7 +84,6 @@ const OurDeals: React.FC<OurDealsProps> = ({ onComplete }) => {
           <option value="BTC">BTC</option>
           <option value="ETH">ETH</option>
           <option value="USDT">USDT</option>
-          {/* Add more token options as needed */}
         </select>
       </div>
 

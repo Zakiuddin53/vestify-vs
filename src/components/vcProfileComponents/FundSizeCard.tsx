@@ -1,3 +1,4 @@
+// FundSizeCard.tsx
 import React from "react";
 
 interface FundSizeCardProps {
@@ -6,9 +7,13 @@ interface FundSizeCardProps {
 
 export const FundSizeCard: React.FC<FundSizeCardProps> = ({ fundSize }) => {
   return (
-    <div className="w-full h-[124.31px] bg-[#fff9f4] rounded-[26.99px] border border-[#e5bf46]/10 p-5">
-      <h3 className="text-[#18191c] text-[15px] font-medium mb-2">Fund Size</h3>
-      <div className="text-[#18191c] text-[40px] font-bold">${fundSize}</div>
+    <div className="relative w-[354.31px] h-[124.31px] bg-[#FFFAF4] border border-[rgba(229,192,70,0.1)] rounded-[26.986px] flex-grow-0 order-3">
+      <div className="absolute left-[20.52px] top-[20.31px] font-urbanist font-medium text-[15.0001px] leading-[17px] text-[#18191C]">
+        Fund Size
+      </div>
+      <div className="absolute left-[19.29px] top-[62.15px] font-urbanist font-bold text-[40px] leading-[41px] text-[#18191C]">
+        ${fundSize}
+      </div>
     </div>
   );
 };

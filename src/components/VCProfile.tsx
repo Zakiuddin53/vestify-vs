@@ -6,10 +6,12 @@ import { useRouter } from "next/navigation";
 
 import { ProfileCard } from "./vcProfileComponents/ProfileCard";
 import { ProjectTable } from "./vcProfileComponents/ProjectTable";
-import { SocialMediaIcons } from "./vcProfileComponents/SocialMediaIcons";
 import { TagList } from "./vcProfileComponents/TagList";
 import { ROICard } from "./vcProfileComponents/ROICard";
 import { SubscriptionFeeCard } from "./vcProfileComponents/SubscriptionFeeCard";
+import { KYCStatus } from "./vcProfileComponents/KYCStatus";
+import { SocialMediaCard } from "./vcProfileComponents/SocialMediaCard";
+import { FundSizeCard } from "./vcProfileComponents/FundSizeCard";
 
 const VCProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<VCProfile | null>(null);
@@ -43,24 +45,25 @@ const VCProfilePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white p-8">
       <Header name={profile.name} />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <ProfileCard name={profile.name} logoBase64={profile.logoBase64} />
-        <KYCStatus kycDone={profile.kycDone} />
-        <SocialMediaCard />
-        <FundSizeCard fundSize={profile.fundSize} />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <TagList tags={profile.tags} />
-        <ROICard title="Last project ROI" value="32%" />
-        <ROICard title="Average ROI" value="72%" isAverage />
-        <SubscriptionFeeCard fee={profile.subscriptionFee} />
+      <div className="flex flex-col gap-[21.34px] w-full mx-auto">
+        <div className="flex flex-col md:flex-row gap-[25.61px] w-full">
+          <ProfileCard name={profile.name} logoBase64={profile.logoBase64} />
+          <KYCStatus kycDone={profile.kycDone} />
+          <SocialMediaCard />
+          <FundSizeCard fundSize={profile.fundSize} />
+        </div>
+        <div className="flex flex-col md:flex-row gap-[21.34px] w-full">
+          <TagList tags={profile.tags} />
+          <ROICard title="Last project ROI" value="32%" />
+          <ROICard title="Average ROI" value="72%" isAverage />
+          <SubscriptionFeeCard fee={profile.subscriptionFee} />
+        </div>
       </div>
       <DescriptionSection description={profile.description} />
       <ProjectTable projects={profile.projects} />
     </div>
   );
 };
-
 const Header: React.FC<{ name: string }> = ({ name }) => {
   const router = useRouter();
 
@@ -78,40 +81,16 @@ const Header: React.FC<{ name: string }> = ({ name }) => {
   );
 };
 
-const KYCStatus: React.FC<{ kycDone: boolean }> = ({ kycDone }) => (
-  <ProfileCard title="KYC Status">
-    <div
-      className={`p-3 rounded-lg ${kycDone ? "bg-green-100" : "bg-red-100"}`}
-    >
-      <span
-        className={`text-2xl font-semibold ${
-          kycDone ? "text-green-600" : "text-red-600"
-        }`}
-      >
-        {kycDone ? "Completed" : "Required"}
-      </span>
-    </div>
-  </ProfileCard>
-);
-
-const SocialMediaCard: React.FC = () => (
-  <ProfileCard title="Social Media">
-    <SocialMediaIcons />
-  </ProfileCard>
-);
-
-const FundSizeCard: React.FC<{ fundSize: string }> = ({ fundSize }) => (
-  <ProfileCard title="Fund Size" className="bg-[#fff9f4] border-[#e5bf46]/10">
-    <span className="text-4xl font-bold">${fundSize}</span>
-  </ProfileCard>
-);
-
 const DescriptionSection: React.FC<{ description: string }> = ({
   description,
 }) => (
-  <div className="mb-8">
-    <h2 className="text-2xl font-bold mb-4">VC Description</h2>
-    <p className="text-gray-700">{description}</p>
+  <div className="flex flex-col items-start gap-[15px] w-full  mb-8">
+    <h2 className="text-[25px] font-bold leading-[28px] text-[#18191C] font-urbanist">
+      VC Description
+    </h2>
+    <p className="w-full text-base leading-6 text-[#2D2D2D] font-urbanist">
+      {description}
+    </p>
   </div>
 );
 
