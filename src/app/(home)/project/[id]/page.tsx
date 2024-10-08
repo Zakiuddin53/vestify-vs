@@ -3,6 +3,11 @@
 import React from "react";
 import { getProjectDetails } from "@/lib/api";
 import DealInfo from "@/components/singleProject/DealInfo";
+import About from "@/components/projectid/About";
+import Team from "@/components/projectid/Team";
+import Partner from "@/components/projectid/Partner";
+import Deal from "@/components/projectid/Deal";
+import Profile from "@/components/projectid/Profile";
 const ProjectDetailsPage = async ({ params }: { params: { id: string } }) => {
   const projectDetails = await getProjectDetails(params.id);
 
@@ -20,6 +25,7 @@ const ProjectDetailsPage = async ({ params }: { params: { id: string } }) => {
           <div className="flex-col w-full justify-start items-start gap-[30px] flex">
             <div className=" w-full justify-end items-end gap-[103px] inline-flex">
               <div className=" w-full flex-col justify-start items-start gap-6 inline-flex">
+                {/**Header */}
                 <div className="w-full flex-col justify-start items-start gap-[15px] flex">
                   <div className=" p-1.5 bg-[#f3f3f3] rounded-[50px] justify-center items-center gap-2.5 inline-flex">
                     <div className="text-black text-[15px] font-semibold font-['Urbanist'] leading-snug">
@@ -31,7 +37,9 @@ const ProjectDetailsPage = async ({ params }: { params: { id: string } }) => {
                     {project.name}
                   </div>
                 </div>
-                <div className="justify-start items-start gap-6 inline-flex">
+
+                {/**Profile */}
+                {/* <div className="justify-start items-start gap-6 inline-flex">
                   <div className="p-[15px] bg-[#f3f3f3] rounded-[10px] flex-col justify-start items-start gap-[15px] inline-flex">
                     <div className="text-black text-[25px] font-extrabold font-['Urbanist'] leading-9">
                       ${token.price}
@@ -65,8 +73,10 @@ const ProjectDetailsPage = async ({ params }: { params: { id: string } }) => {
                   <div className="text-black text-[17px] font-bold font-['Urbanist'] leading-normal">
                     50%
                   </div>
-                </div>
+                </div> */}
+                <Profile token={token} project={project} />
               </div>
+
               <div className="flex-col justify-start items-end gap-[25px] inline-flex">
                 <div className="w-[84.84px] h-[84.84px] bg-[#d9d9d9] rounded-[60px]" />
                 <div className="flex-col justify-start items-end gap-[15px] flex">
@@ -84,10 +94,12 @@ const ProjectDetailsPage = async ({ params }: { params: { id: string } }) => {
                 </div>
               </div>
             </div>
+
             <div className="w-full flex-col justify-start items-start gap-[30px] flex">
               <div className="w-full justify-start items-start gap-[53px] inline-flex">
                 <div className="w-full flex-col justify-start items-start gap-[25px] inline-flex">
-                  <div className="w-full flex-col justify-start items-start gap-2.5 flex">
+                  {/**About */}
+                  {/* <div className="w-full flex-col justify-start items-start gap-2.5 flex">
                     <div className="w-full text-[#18191c] text-2xl font-bold font-['Urbanist'] leading-loose">
                       About {project.name}
                     </div>
@@ -98,9 +110,10 @@ const ProjectDetailsPage = async ({ params }: { params: { id: string } }) => {
                     <div className="w-full text-[#2c2c2c] text-[17px] font-normal font-['Urbanist'] leading-normal">
                       {project.description}
                     </div>
-                  </div>
-
-                  <div className="h-[266.37px] w-full flex-col justify-start items-center gap-2.5 flex">
+                  </div> */}
+                  <About project={project} />
+                  {/**Team */}
+                  {/* <div className="h-[266.37px] w-full flex-col justify-start items-center gap-2.5 flex">
                     <div className="w-full px-[275.50px] py-2 bg-[#f8f8f8] rounded-lg justify-center items-center gap-2.5 inline-flex">
                       <div className="w-full text-[#18191c] text-2xl font-bold font-['Urbanist'] leading-loose">
                         Team and Advisors
@@ -163,30 +176,24 @@ const ProjectDetailsPage = async ({ params }: { params: { id: string } }) => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
+                  <Team project={project} />
 
-                  <div className="w-full h-[0px] border border-[#18191c]/20"></div>
+                  {/**Partners and Investors*/}
+                  {/* <div className="w-full h-[0px] border border-[#18191c]/20"></div>
                   <div className="w-full p-[30px] bg-[#f8f8f8] rounded-lg flex-col justify-start items-center gap-[30px] flex">
                     <div className="w-full text-center text-[#18191c] text-2xl font-bold font-['Urbanist'] leading-loose">
                       Partners and Investors
                     </div>
                     <div className="self-stretch justify-between items-start gap-[85px] inline-flex">
-                      <img
-                        className="w-[124.27px] h-[25px]"
-                        src="https://via.placeholder.com/124x25"
-                      />
-                      <img
-                        className="w-[92px] h-[23px]"
-                        src="https://via.placeholder.com/92x23"
-                      />
-                      <img
-                        className="w-[122.97px] h-[22px]"
-                        src="https://via.placeholder.com/123x22"
-                      />
-                      <img
-                        className="w-[104.76px] h-[25px]"
-                        src="https://via.placeholder.com/105x25"
-                      />
+                      {partnersAndInvestors.map((partner, index) => (
+                        <img
+                          key={index}
+                          className="w-[124.27px] h-[25px]"
+                          src={`data:image/png;base64,${partner.logoBase64}`}
+                          alt={partner.name}
+                        />
+                      ))}
                     </div>
                   </div>
                   <div className="w-full px-2.5 py-5 bg-indigo-600/10 rounded-lg justify-center items-center gap-2.5 inline-flex">
@@ -224,10 +231,12 @@ const ProjectDetailsPage = async ({ params }: { params: { id: string } }) => {
                       <br />
                       Ecosystem Development: Linear release over 24 months.
                     </div>
-                  </div>
+                  </div> */}
+                  <Partner partnersAndInvestors={partnersAndInvestors} />
                 </div>
 
-                <div className="p-5 bg-neutral-100 rounded-[10px] flex-col justify-start items-start gap-[30px] inline-flex">
+                {/**Deal Info */}
+                {/* <div className="p-5 bg-neutral-100 rounded-[10px] flex-col justify-start items-start gap-[30px] inline-flex">
                   <div className="text-[#18191c] text-2xl font-bold font-['Urbanist'] leading-loose">
                     Deal Info
                   </div>
@@ -297,7 +306,8 @@ const ProjectDetailsPage = async ({ params }: { params: { id: string } }) => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
+                <Deal project={project} />
               </div>
             </div>
           </div>
