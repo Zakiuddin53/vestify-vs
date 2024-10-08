@@ -1,3 +1,3 @@
-import VCProfilePage from "@/components/VCProfile";
+import VCProfilePage2 from "@/components/VCProfile2";
 
-export default VCProfilePage;
+export default VCProfilePage2;
