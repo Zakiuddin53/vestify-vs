@@ -16,6 +16,9 @@ function Projects({ profile }) {
               <div> Top Gainers</div>
               <div> Raised Amount</div>
               <div> Ongoing Claim</div>
+              <div></div>
+
+              {/* <br className="h-[1px] bg-gray w-full "></br> */}
 
               {profile?.projects.map((item, index) => (
                 <React.Fragment key={index}>
@@ -47,7 +50,7 @@ function Projects({ profile }) {
                     </span>
                   </div>
                   <div className="">
-                    <div className="w-24 h-[35px] p-2.5 left-[1199.99px] top-[2.50px] absolute bg-[#443cc4] rounded-[28px] justify-center items-center gap-2.5 inline-flex">
+                    <div className="w-24 h-[35px] p-2.5 bg-[#443cc4] rounded-[28px] justify-center items-center gap-2.5 inline-flex">
                       <div className="text-white text-sm font-semibold font-['Urbanist'] capitalize tracking-tight">
                         Details
                       </div>

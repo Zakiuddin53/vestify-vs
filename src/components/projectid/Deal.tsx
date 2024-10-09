@@ -2,12 +2,12 @@ import React from "react";
 
 function Deal({ project }) {
   return (
-    <div className="p-5 bg-neutral-100 rounded-[10px] flex-col justify-start items-start gap-[30px] inline-flex">
+    <div className="p-5 h-full bg-neutral-100 rounded-[10px] flex-col justify-start items-start gap-[30px] inline-flex">
       <div className="text-[#18191c] text-2xl font-bold font-['Urbanist'] leading-loose">
         Deal Info
       </div>
-      <div className="flex-col justify-start items-center gap-5 flex">
-        <div className="self-stretch h-[108px] flex-col justify-start items-start gap-2.5 flex">
+      <div className="h-full flex-col justify-start items-center gap-5 flex">
+        <div className="self-stretch h-full flex-col justify-start items-start gap-2.5 flex">
           <div className="self-stretch justify-between items-center inline-flex">
             <div className="text-[#18191c] text-[17px] font-bold font-['Urbanist'] leading-loose">
               Token price
@@ -50,7 +50,7 @@ function Deal({ project }) {
               <div className="w-[13.51px] h-[13.51px] relative" />
             </div>
           </div>
-          <div className="self-stretch justify-start items-center gap-2.5 inline-flex">
+          <div className="h-full self-stretch justify-start items-center gap-2.5 inline-flex">
             <div className="px-[15px] py-3 bg-white rounded-lg justify-start items-center gap-[25.34px] flex">
               <div className="justify-start items-center gap-[16.89px] flex">
                 <div className="w-[42.23px] h-[42.23px] p-[8.45px] bg-[#eef9ff] rounded-lg flex-col justify-center items-center gap-[8.45px] inline-flex" />
