@@ -25,7 +25,7 @@ export function SideNavbar() {
     try {
       const response = await logout();
       if (response.success) {
-        router.push("/");
+        router.push("/auth/login");
       } else {
         console.error("Logout failed:", response.message);
       }
@@ -66,7 +66,7 @@ export function SideNavbar() {
           </Button>
 
           {/* Profile Icon */}
-          <Link href="/profile">
+          <Link href="/vc">
             <Button
               variant="ghost"
               size="icon"
