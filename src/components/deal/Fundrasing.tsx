@@ -2,7 +2,7 @@ import React from "react";
 
 function Fundrasing() {
   return (
-    <div className="w-full h-full flex-col justify-between items-start gap-[50px] flex">
+    <div className="w-full h-full flex-col justify-start items-start gap-[50px] flex">
       <div className="  self-stretch h-[131px] flex-col justify-start items-start gap-10 flex">
         <div className="w-full  justify-between items-center gap-[456px] inline-flex">
           <div className="justify-start items-center gap-2.5 flex">

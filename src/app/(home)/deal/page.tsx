@@ -30,7 +30,7 @@ function page() {
         <div className="h-full w-full px-8 flex-col justify-start items-start flex">
           <div className="h-full w-full flex-col justify-start items-start gap-[30px] flex">
             {/**Top */}
-            <div className="h-full w-full justify-between items-end gap-[103px] inline-flex">
+            <div className=" w-full justify-between items-end gap-[103px] inline-flex">
               <div className="flex-col justify-start items-start gap-6 inline-flex">
                 <div className="flex-col justify-start items-start gap-[15px] flex">
                   <div className="p-1.5 bg-[#f3f3f3] rounded-[50px] justify-center items-center gap-2.5 inline-flex">
@@ -88,7 +88,7 @@ function page() {
               </div>
             </div>
 
-            <div className="h-full w-full flex-col justify-start items-start gap-[30px] flex">
+            <div className=" w-full flex-col justify-start items-start gap-[30px] flex">
               <div className="h-full w-full flex-col justify-start items-start flex">
                 <div className="justify-center items-start gap-[39px] inline-flex">
                   {/* Deal Info */}
