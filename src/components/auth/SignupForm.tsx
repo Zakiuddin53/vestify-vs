@@ -10,7 +10,7 @@ import VCTagsForm from "./VCTagsForm";
 import imageCompression from "browser-image-compression";
 import InitialSignupForm from "./InitialSignupForm";
 import { jwtDecode } from "jwt-decode";
-import Link from "next/link";
+import Socials from "../projectComponents/Socials";
 
 interface TokenPayload {
   user?: {
@@ -24,6 +24,17 @@ interface UserData {
   name?: string;
   description?: string;
   logoBase64?: string;
+  subscriptionFee?: number;
+  tags?: string[];
+  kycDone?: boolean;
+  socials?: {
+    x?: string;
+    instagram?: string;
+    discord?: string;
+    telegram?: string;
+    medium?: string;
+    youtube?: string;
+  };
 }
 
 interface VCInfoFormData {
@@ -36,6 +47,15 @@ interface VCTagsFormData {
   tags: string[];
   kycDone: boolean;
   subscriptionFee: number;
+}
+
+interface SocialMediaData {
+  x?: string;
+  instagram?: string;
+  discord?: string;
+  telegram?: string;
+  medium?: string;
+  youtube?: string;
 }
 
 interface SignUpResponse {
@@ -103,6 +123,13 @@ const SignupForm: React.FC = () => {
   };
 
   const handleVCTagsSubmit = async (tagsAndSubscription: VCTagsFormData) => {
+    setStep(4); // Move to social media form instead of submitting
+    setUserData((prev) => ({ ...prev, ...tagsAndSubscription }));
+  };
+
+  const handleSocialMediaSubmit = async (data: {
+    projectSocials: SocialMediaData;
+  }) => {
     setIsLoading(true);
     setError("");
 
@@ -111,9 +138,10 @@ const SignupForm: React.FC = () => {
       name: userData.name!,
       description: userData.description!,
       logoBase64: userData.logoBase64!,
-      subscriptionFee: tagsAndSubscription.subscriptionFee,
-      tags: tagsAndSubscription.tags,
-      kycDone: tagsAndSubscription.kycDone,
+      subscriptionFee: userData.subscriptionFee!,
+      tags: userData.tags!,
+      kycDone: userData.kycDone!,
+      socials: data.projectSocials,
     };
 
     try {
@@ -139,7 +167,7 @@ const SignupForm: React.FC = () => {
           userId={userData.id || ""}
         />
       )}
-      {step === 1}
+      {step === 4 && <Socials onComplete={handleSocialMediaSubmit} />}
     </div>
   );
 };

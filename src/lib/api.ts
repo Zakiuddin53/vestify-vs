@@ -19,6 +19,14 @@ interface VCData {
   subscriptionFee: number;
   tags: string[];
   kycDone: boolean;
+  socials: {
+    x?: string;
+    instagram?: string;
+    discord?: string;
+    telegram?: string;
+    medium?: string;
+    youtube?: string;
+  };
 }
 
 export interface ProjectInfo {
