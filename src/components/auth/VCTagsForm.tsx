@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Button } from "../ui/Button";
+import { Button } from "../ui/button";
 import { FormError } from "../ui/formError";
 
 const vcTagsSchema = z.object({
@@ -71,7 +71,7 @@ const VCTagsForm: React.FC<VCTagsFormProps> = ({
             <span className="ml-2 text-sm font-medium text-[#344053]">0%</span>
           </div>
 
-          <h2 className="text-[#101828] text-2xl font-semibold font-['Urbanist']">
+          <h2 className="text-[#101828] text-2xl font-semibold font-['Urbanist'] text-center  ">
             VC Details
           </h2>
 
@@ -80,7 +80,7 @@ const VCTagsForm: React.FC<VCTagsFormProps> = ({
             <label className="block text-sm font-medium text-[#101828] mb-1">
               VC tags
             </label>
-            <div className="w-[400px] h-[87px] pt-4 border border-[#d0d5dd]/60 rounded-tl-[6px] relative">
+            <div className="w-[400px] h-[87px] pt-4 border border-[#d0d5dd]/60 rounded-tl-[6px] relative text-[#101828]">
               <input
                 type="text"
                 value={currentTag}
@@ -148,7 +148,7 @@ const VCTagsForm: React.FC<VCTagsFormProps> = ({
           </div>
 
           {/* Subscription fee */}
-          <div className="w-[400px] h-[53px] pt-5 flex justify-between items-center bg-[#f2f2ff] rounded-tl-[8px]">
+          <div className="w-[400px] h-[53px]  flex justify-between align-middle items-center bg-[#f2f2ff] rounded-tl-[8px]">
             <span className="text-lg font-medium text-[#101828]">
               Subscription fee
             </span>

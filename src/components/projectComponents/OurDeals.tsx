@@ -45,7 +45,7 @@ const OurDeals: React.FC<OurDealsProps> = ({ onComplete }) => {
           value={minimum}
           onChange={(e) => setMinimum(e.target.value)}
           placeholder="Enter Minimum"
-          className="w-full p-3 border border-gray-300 rounded-md"
+          className="w-full p-3 border border-gray-300 rounded-md text-black"
           required
         />
       </div>
@@ -61,7 +61,7 @@ const OurDeals: React.FC<OurDealsProps> = ({ onComplete }) => {
           value={maximum}
           onChange={(e) => setMaximum(e.target.value)}
           placeholder="Enter maximum"
-          className="w-full p-3 border border-gray-300 rounded-md"
+          className="w-full p-3 border border-gray-300 rounded-md text-black"
           required
         />
       </div>
@@ -77,7 +77,7 @@ const OurDeals: React.FC<OurDealsProps> = ({ onComplete }) => {
           id="acceptedTokens"
           value={acceptedTokens}
           onChange={(e) => setAcceptedTokens(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-md"
+          className="w-full p-3 border border-gray-300 rounded-md text-black"
           required
         >
           <option value="">Select token accepted</option>
@@ -98,7 +98,7 @@ const OurDeals: React.FC<OurDealsProps> = ({ onComplete }) => {
           value={poolFee}
           onChange={(e) => setPoolFee(e.target.value)}
           placeholder="Enter Pool fee"
-          className="w-full p-3 border border-gray-300 rounded-md"
+          className="w-full p-3 border border-gray-300 rounded-md text-black"
           required
         />
       </div>

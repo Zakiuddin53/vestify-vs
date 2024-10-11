@@ -118,7 +118,7 @@ const SignupForm: React.FC = () => {
 
     try {
       await createVC(finalVCData);
-      router.push("/vc/profile");
+      router.push("/vc");
     } catch (error) {
       console.error("VC creation error:", error);
       setError("An error occurred while creating the VC profile.");
@@ -139,14 +139,7 @@ const SignupForm: React.FC = () => {
           userId={userData.id || ""}
         />
       )}
-      {step === 1 && (
-        <p className="mt-4 text-center text-gray-700">
-          Already have an account?{" "}
-          <Link href="/auth/login" className="text-blue-500 hover:underline">
-            Log in
-          </Link>
-        </p>
-      )}
+      {step === 1}
     </div>
   );
 };

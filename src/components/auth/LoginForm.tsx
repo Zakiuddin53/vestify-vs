@@ -9,8 +9,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Cookies from "js-cookie";
 import { Input } from "../ui/Input";
-import { Button } from "../ui/Button";
+import { Button } from "../ui/button";
 import { FormError } from "../ui/formError";
+import TwitterIcon from "../ui/TwitterIcon";
+import DiscordIcon from "../ui/DiscordIcon";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -44,7 +46,7 @@ const LoginForm: React.FC = () => {
           secure: process.env.NODE_ENV === "production",
           sameSite: "strict",
         });
-        router.push("/vc/profile");
+        router.push("/vc");
       } else {
         setError(response.message || "Invalid credentials");
       }
@@ -57,7 +59,7 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="w-[1440px] h-[100vh] relative bg-[#f7f9fc] flex justify-center items-center">
+    <div className="w-full h-[100vh] relative bg-[#f7f9fc] flex justify-center items-center">
       <div className="w-[456px] px-7 py-8 left-[492px] bg-white rounded-[10px] border border-[#d0d4dd]">
         <div className="w-[400px] flex-col justify-start items-center gap-8 flex">
           <div className="w-[400px] h-[34px] flex-col justify-start items-center flex">
@@ -83,6 +85,26 @@ const LoginForm: React.FC = () => {
                   {...register("password")}
                   error={errors.password}
                 />
+              </div>
+              <div className="w-full flex justify-between gap-4">
+                <button
+                  type="button"
+                  className="w-[200px] h-[60px] bg-[#ecf9ff] rounded-[10px] flex items-center justify-center gap-3"
+                >
+                  <TwitterIcon className="w-6 h-6 text-[#1DA1F2]" />
+                  <span className="text-black text-base font-semibold font-['Urbanist'] leading-normal">
+                    Twitter
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  className="w-[200px] h-[60px] bg-[#f1f2ff] rounded-[10px] flex items-center justify-center gap-3"
+                >
+                  <DiscordIcon className="w-6 h-6 text-[#5865F2]" />
+                  <span className="text-black text-base font-semibold font-['Urbanist'] leading-normal">
+                    Discord
+                  </span>
+                </button>
               </div>
               <Button
                 type="submit"

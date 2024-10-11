@@ -21,7 +21,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full p-3 text-left border border-gray-300 rounded-md text-sm appearance-none bg-white flex justify-between items-center"
+        className="w-full p-3 text-left border border-gray-300 rounded-md text-sm appearance-none bg-white flex justify-between items-center text-black"
       >
         {value || placeholder}
         <svg
@@ -40,11 +40,11 @@ const Dropdown: React.FC<DropdownProps> = ({
         </svg>
       </button>
       {isOpen && (
-        <ul className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
+        <ul className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md ">
           {options.map((option) => (
             <li
               key={option}
-              className="px-3 py-2 cursor-pointer hover:bg-gray-100 text-black"
+              className="px-3 py-2 cursor-pointer hover:bg-gray-400 text-black"
               onClick={() => {
                 onChange(option);
                 setIsOpen(false);

@@ -35,7 +35,7 @@ export function SideNavbar() {
   };
 
   return (
-    <nav className="AppSidebar w-20 h-screen bg-indigo-600 flex flex-col justify-between items-center py-6 px-2">
+    <nav className="AppSidebar w-[80px] h-screen bg-indigo-600 flex flex-col justify-between items-center py-6 px-2">
       <div className="flex flex-col items-center space-y-8">
         {/* Logo */}
         <div className="w-12 h-12 flex justify-center items-center">

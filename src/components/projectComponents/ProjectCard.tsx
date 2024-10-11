@@ -38,7 +38,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         </div>
       </div>
 
-      <div className="px-3 py-1 bg-indigo-100 rounded-full self-start">
+      <div className="px-2  bg-indigo-100 rounded-lg self-start">
         <span className="text-indigo-600 text-xs font-bold">
           {project.round}
         </span>
@@ -69,14 +69,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             style={{ width: `${project.progress}%` }}
           ></div>
         </div>
-        <span className="text-sm font-medium text-gray-600">
+        <span className="text-sm font-medium text-gray-600 ">
           {project.progress}%
         </span>
       </div>
 
       <Link
         href={`/project/${project.id}`}
-        className="w-full bg-indigo-600 text-white font-semibold py-2 px-4 rounded-full hover:bg-indigo-700 transition duration-300 text-center"
+        className="w-[103px] bg-indigo-600 text-white font-semibold py-2 px-4 rounded-full hover:bg-indigo-700 transition duration-300 text-center"
       >
         Details →
       </Link>

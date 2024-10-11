@@ -44,7 +44,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ onComplete }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6  mx-auto">
-      <h2 className="text-2xl font-bold text-center mb-6 text-black">
+      <h2 className="text-2xl font-bold text-center mb-6 text-black text-center">
         Basic Information
       </h2>
 
@@ -61,7 +61,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ onComplete }) => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter Project name"
-          className="w-full p-3 border border-gray-300 rounded-md text-sm text-gray-500"
+          className="w-full p-3 border border-gray-300 rounded-md text-sm text-black"
           required
         />
       </div>
@@ -78,7 +78,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ onComplete }) => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Project Description"
-          className="w-full p-3 border border-gray-300 rounded-md text-sm text-gray-500"
+          className="w-full p-3 border border-gray-300 rounded-md text-sm text-black"
           rows={4}
           required
         />

@@ -44,7 +44,9 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <h2 className="text-2xl font-bold mb-6 text-black">Token Metrics</h2>
+      <h2 className="text-2xl font-bold mb-6 text-black text-center">
+        Token Metrics
+      </h2>
 
       <div>
         <label
@@ -118,10 +120,10 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
         </label>
         <input
           id="tge"
-          type="datetime-local"
+          type="date"
           value={tge}
           onChange={(e) => setTge(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-md"
+          className="w-full p-3 border border-gray-300 rounded-md text-black "
           required
         />
       </div>
@@ -132,10 +134,10 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
         </label>
         <input
           id="vesting"
-          type="datetime-local"
+          type="date"
           value={vesting}
           onChange={(e) => setVesting(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-md"
+          className="w-full p-3 border border-gray-300 rounded-md text-black"
           required
         />
       </div>

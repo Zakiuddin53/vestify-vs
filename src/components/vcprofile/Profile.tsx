@@ -106,7 +106,7 @@ function Profile({ profile }) {
             Subscription price
           </div>
           <div className="left-[19.30px] top-[62.15px] absolute text-[#18191c] text-[40px] font-bold font-['Urbanist'] leading-[41.35px]">
-            {profile?.subscriptionFee}
+            $ {profile?.subscriptionFee}
           </div>
         </div>
       </div>

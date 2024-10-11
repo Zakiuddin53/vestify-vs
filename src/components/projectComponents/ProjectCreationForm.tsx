@@ -67,7 +67,7 @@ const ProjectCreationForm: React.FC<{
     setError(null);
     try {
       await createProject(projectData);
-      router.push("/vc/profile");
+      router.push("/vc");
     } catch (error) {
       console.error("Project creation error:", error);
       setError(

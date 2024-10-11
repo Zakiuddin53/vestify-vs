@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TwitterIcon from "../ui/TwitterIcon";
 import DiscordIcon from "../ui/DiscordIcon";
 import EyeIcon from "../ui/Icons/EyeIcon";
+import Link from "next/link";
 
 interface SignupFormData {
   email: string;
@@ -87,7 +88,7 @@ const InitialSignupForm: React.FC<{
           onSubmit={handleSubmit}
           className="w-full flex-col justify-start items-center gap-[30px] flex"
         >
-          <div className="self-stretch flex-col justify-start items-start gap-8 flex">
+          <div className="self-stretch flex-col justify-start items-start gap-6 flex">
             <div className="w-full flex-col gap-6">
               {renderInputField("Username", "username", "text")}
               {renderInputField("Email", "email", "email")}
@@ -122,6 +123,12 @@ const InitialSignupForm: React.FC<{
             </button>
             {error && <p className="text-red-600 text-center">{error}</p>}
           </div>
+          <p className=" text-center text-gray-700">
+            Already have an account?{" "}
+            <Link href="/auth/login" className="text-blue-500 hover:underline">
+              Log in
+            </Link>
+          </p>
         </form>
       </div>
     </div>

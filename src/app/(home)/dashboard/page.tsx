@@ -73,10 +73,6 @@ const Dashboard: React.FC = () => {
         <div className=" mx-auto py-4 px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
-              <FaArrowLeft
-                className="text-gray-400 mr-4 cursor-pointer"
-                onClick={() => router.back()}
-              />
               <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
             </div>
             <div className="flex items-center space-x-4">
@@ -99,11 +95,17 @@ const Dashboard: React.FC = () => {
               </button>
             </div>
           </div>
+          <div className="mt-8 bg-gray-200 p-2 rounded-full w-[30px]">
+            <FaArrowLeft
+              className="text-gray-500 cursor-pointer"
+              onClick={() => router.back()}
+            />
+          </div>
         </div>
       </header>
 
       <main className="flex-grow">
-        <div className=" mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div className=" mx-auto py-2 px-4 sm:px-6 lg:px-8">
           {loading ? (
             <div className="text-center py-8">Loading...</div>
           ) : error ? (
