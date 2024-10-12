@@ -12,7 +12,7 @@ export default function CreateProjectPage() {
     if (step > 1) {
       setStep((prevStep) => prevStep - 1);
     } else {
-      router.push("/vc/profile");
+      router.push("/vc");
     }
   };
 

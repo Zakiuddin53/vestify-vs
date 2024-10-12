@@ -1,6 +1,8 @@
 import React from "react";
+import { useRouter } from "next/navigation";
 
 function Projects({ profile }) {
+  const router = useRouter();
   return (
     <div className="w-full self-stretch h-[409.50px] flex-col justify-start items-start gap-[30px] flex">
       <div className="text-[#18191c] text-[25px] font-bold font-['Urbanist'] leading-7">
@@ -51,9 +53,14 @@ function Projects({ profile }) {
                   </div>
                   <div className="">
                     <div className="w-24 h-[35px] p-2.5 bg-[#443cc4] rounded-[28px] justify-center items-center gap-2.5 inline-flex">
-                      <div className="text-white text-sm font-semibold font-['Urbanist'] capitalize tracking-tight">
+                      <button
+                        className="text-white text-sm font-semibold font-['Urbanist'] capitalize tracking-tight"
+                        onClick={() => {
+                          router.push("/deal");
+                        }}
+                      >
                         Details
-                      </div>
+                      </button>
                     </div>
                   </div>
                 </React.Fragment>

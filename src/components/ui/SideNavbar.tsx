@@ -1,9 +1,10 @@
 "use client";
 
 import { User, Settings, LogOut, Plus } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +18,7 @@ import { useRouter } from "next/navigation";
 import Logo from "@/components/ui/Icons/Logo";
 import Capital from "@/components/ui/Icons/Capital";
 import Home from "@/components/ui/Icons/Home";
+import profileimg from "@/public/profile.svg";
 
 export function SideNavbar() {
   const router = useRouter();
@@ -92,7 +94,7 @@ export function SideNavbar() {
               <span className="sr-only">Settings</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="end" className="bg-white text-black">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Profile</DropdownMenuItem>
@@ -102,8 +104,12 @@ export function SideNavbar() {
           </DropdownMenuContent>
         </DropdownMenu>
 
+        <Link href="/dashboard">
+          <Image src={profileimg} alt="avatar" className="w-12 h-12" />
+        </Link>
+
         {/* Avatar Dropdown */}
-        <DropdownMenu>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
@@ -138,7 +144,7 @@ export function SideNavbar() {
               <span>Log out</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
       </div>
     </nav>
   );

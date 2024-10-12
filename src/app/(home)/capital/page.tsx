@@ -35,7 +35,7 @@ function page() {
         </div>
 
         {/**grid */}
-        <div className="gap-4 px-8 w-full h-[120vh] flex items-center justify-center">
+        <div className="gap-4 px-8 w-full h-[789px] flex items-center justify-center">
           <div className="grid grid-rows-3 grid-cols-5 gap-4 w-full h-full ">
             {/**item 0 */}
             <div className="bg-blue-500 col-span-2 flex items-center justify-center text-white text-lg rounded-xl">
@@ -95,8 +95,8 @@ function page() {
             </div>
 
             {/**item 4 */}
-            <div className="flex flex-col  justify-center align-center gap-[18.97px] inline-flex text-white text-lg rounded-xl ">
-              <div className="bg-[#f8f8f8] p-6 rounded-[18.97px] border border-black/10">
+            <div className="w-full h-full flex flex-col  justify-center align-center gap-[18.97px] inline-flex text-white text-lg rounded-xl ">
+              <div className="w-full h-full  bg-[#f8f8f8] p-6 rounded-[18.97px] border border-black/10">
                 <div className="text-[#18191c] text-[15px] font-medium font-['Urbanist'] leading-[17.39px]">
                   Last Month’s Investment
                 </div>
@@ -119,7 +119,7 @@ function page() {
               <div className="left-[18.90px] top-[18.97px] absolute text-[#18191c] text-[15px] font-medium font-['Urbanist'] leading-[17.39px]">
                 Top Investors
               </div>
-              <div className="w-full h-full left-[18.90px] top-[56.70px] absolute flex-col justify-start items-start gap-[9.48px] inline-flex">
+              <div className="w-full h-full p-2 top-[56.70px] absolute flex-col justify-start items-start gap-[9.48px] inline-flex">
                 <div className="self-stretch p-[7.59px] bg-white rounded-[9.48px] justify-start items-center gap-[79.66px] inline-flex">
                   <div className="justify-start items-center gap-[7.59px] flex">
                     <div className="w-[28.45px] h-[28.45px] bg-[#d9d9d9] rounded-[25.60px]" />
@@ -139,7 +139,7 @@ function page() {
                     </div>
                   </div>
                 </div>
-                <div className="self-stretch p-[7.59px] bg-white rounded-[9.48px] justify-start items-center gap-[79.66px] inline-flex">
+                <div className="w-full self-stretch p-[7.59px] bg-white rounded-[9.48px] justify-start items-center gap-[79.66px] inline-flex">
                   <div className="justify-start items-center gap-[7.59px] flex">
                     <div className="w-[28.45px] h-[28.45px] bg-[#d9d9d9] rounded-[25.60px]" />
                     <div className="text-[#8f8f8f] text-sm font-medium font-['Urbanist'] leading-[17.39px]">
@@ -298,16 +298,19 @@ function page() {
         </div>
 
         {/**project2 */}
-        <div className="  px-8 w-full flex-col justify-between items-start gap-6 flex">
+        <div className="  px-4 w-full flex-col justify-between items-start gap-6 flex">
           <div className="w-full px-[20px] pt-[20px] flex-col justify-start items-end gap-[30px] flex">
             <div className="w-full ">
+              <h1 className="text-[#18191c] text-2xl font-extrabold font-['Plus Jakarta Sans'] leading-[38px] mb-[15px]">
+                Projects
+              </h1>
               <div className="w-full h-auto relative grid grid-cols-8 items-center text-[#afafaf] text-[15px] font-semibold gap-[10px]">
-                <div className="col-span-2">Deal</div>
-                <div>Allocation</div>
-                <div>Tokens received</div>
-                <div>Receiving EVM</div>
-                <div>Contributed</div>
-                <div>Refunded</div>
+                <div className="col-span-2">Project Name</div>
+                <div>Pledge Amount</div>
+                <div>Market Cap</div>
+                <div>Exchange</div>
+                <div>Raised Amount</div>
+                <div>Ongoing Claim</div>
 
                 <div></div>
 
@@ -331,12 +334,12 @@ function page() {
                       43
                     </div>
                     <div className="">
-                      <span className="text-[#00b828] text-lg font-bold font-['Urbanist'] leading-[32.85px]">
+                      <span className="text-[#505050] text-lg font-bold font-['Urbanist'] leading-[32.85px]">
                         +$3.00
                       </span>
                     </div>
                     <div className="">
-                      <span className="text-[#ff0004] text-lg font-bold font-['Urbanist'] leading-[32.85px]">
+                      <span className="text-[#505050] text-lg font-bold font-['Urbanist'] leading-[32.85px]">
                         8.00
                       </span>
                     </div>

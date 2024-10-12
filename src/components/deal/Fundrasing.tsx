@@ -11,28 +11,28 @@ function Fundrasing() {
             </div>
             <div className="w-5 h-5 relative" />
           </div>
-          <div className="justify-start items-center gap-[18px] flex">
-            <div className="p-[15px] bg-indigo-600 rounded-[5px] justify-center items-center gap-2.5 flex">
+          <div className="h-[43px] justify-start items-center gap-[18px] flex">
+            <div className="h-full px-2 bg-indigo-600 rounded-[5px] justify-center items-center gap-2.5 flex">
               <div className="text-white text-lg font-semibold font-['Urbanist'] leading-loose">
                 Finish fundraising
               </div>
             </div>
-            <div className="p-[15px] rounded-[5px] border border-[#908eb6] justify-center items-center gap-2.5 flex">
+            <div className="h-full px-2 rounded-[5px] border border-[#908eb6] justify-center items-center gap-2.5 flex">
               <div className="text-[#908eb6] text-lg font-semibold font-['Urbanist'] leading-loose">
                 Pool links
               </div>
             </div>
-            <div className="p-[15px] rounded-[5px] border border-[#908eb6] justify-center items-center gap-2.5 flex">
+            <div className="h-full px-2 rounded-[5px] border border-[#908eb6] justify-center items-center gap-2.5 flex">
               <div className="text-[#908eb6] text-lg font-semibold font-['Urbanist'] leading-loose">
                 Export
               </div>
             </div>
-            <div className="p-[15px] rounded-[5px] border border-[#619b6a] justify-center items-center gap-2.5 flex">
+            <div className="h-full px-2 rounded-[5px] border border-[#619b6a] justify-center items-center gap-2.5 flex">
               <div className="text-[#619b6a] text-lg font-semibold font-['Urbanist'] leading-loose">
                 Import spreadsheets
               </div>
             </div>
-            <div className="p-[15px] rounded-[5px] border border-[#908eb6] justify-center items-center gap-2.5 flex">
+            <div className="h-full px-2 rounded-[5px] border border-[#908eb6] justify-center items-center gap-2.5 flex">
               <div className="text-[#908eb6] text-lg font-semibold font-['Urbanist'] leading-loose">
                 Add investor
               </div>
@@ -72,7 +72,7 @@ function Fundrasing() {
       </div>
 
       {/* Bottom */}
-      <div className="w-full h-full h-[323.43px] relative">
+      <div className="mt-[50px] w-full h-full h-[323.43px] relative">
         <div className="w-full h-[38px] w-full left-[0.67px] top-0 absolute justify-between items-center gap-[26.75px] inline-flex">
           <div className="justify-between items-center gap-[11px] flex">
             <div className="w-[46px] flex-col justify-start items-start gap-[13px] inline-flex">
@@ -138,7 +138,7 @@ function Fundrasing() {
           </div>
           <div className="justify-start items-center gap-2.5 flex">
             <div className="w-[15px] h-[15px] relative" />
-            <div className="px-[15px] py-3.5 bg-[#e4e4e4] rounded-[5px] justify-center items-center gap-2.5 flex">
+            <div className="px-[15px] py-[3px] bg-[#e4e4e4] rounded-[5px] justify-center items-center gap-2.5 flex">
               <div className="text-[#18191c] text-sm font-semibold font-['Urbanist'] leading-loose">
                 Refund
               </div>

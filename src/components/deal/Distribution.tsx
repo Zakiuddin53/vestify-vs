@@ -1,9 +1,16 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import Editing from "./Editing";
 
 function Distribution() {
+  const [editing, setEditing] = useState(false);
+
+  const handleEdit = () => {
+    setEditing(!editing);
+  };
   return (
     <div className="h-[531.85px] flex-col justify-start items-start gap-10 flex">
-      <div className="self-stretch justify-end items-start gap-[523px] inline-flex">
+      <div className="self-stretch justify-between items-start gap-[523px] inline-flex">
         <div className="justify-start items-end gap-[49px] flex">
           <div className="w-[71px] flex-col justify-start items-start gap-3.5 inline-flex">
             <div className="self-stretch justify-start items-center gap-2 inline-flex">
@@ -33,16 +40,19 @@ function Distribution() {
             </div>
           </div>
         </div>
-        <div className="justify-start items-center gap-[18px] flex">
-          <div className="p-[15px] bg-indigo-600 rounded-[5px] justify-center items-center gap-2.5 flex">
-            <div className="text-white text-lg font-semibold font-['Urbanist'] leading-loose">
+        <div className="h-[43px] justify-start items-center gap-[18px] flex">
+          <div className="h-full px-2 bg-indigo-600 rounded-[5px] justify-center items-center gap-2.5 flex">
+            <button
+              className="text-white text-lg font-semibold font-['Urbanist'] leading-loose"
+              onClick={() => handleEdit()}
+            >
               Edit schedule
-            </div>
+            </button>
           </div>
-          <div className="p-[15px] rounded-[5px] border border-[#908eb6] justify-center items-center gap-2.5 flex">
-            <div className="text-[#908eb6] text-lg font-semibold font-['Urbanist'] leading-loose">
+          <div className="-full px-2  rounded-[5px] border border-[#908eb6] justify-center items-center gap-2.5 flex">
+            <button className="text-[#908eb6] text-lg font-semibold font-['Urbanist'] leading-loose">
               Start distribution
-            </div>
+            </button>
           </div>
         </div>
       </div>
@@ -89,7 +99,7 @@ function Distribution() {
         </div>
       </div>
       <div className="self-stretch h-[361px] flex-col justify-start items-start gap-5 flex">
-        <div className="w-[1200.66px] h-[11px] relative">
+        <div className="w-full h-[11px] relative">
           <div className="left-0 top-0 absolute text-[#afafaf] text-[15px] font-semibold font-['Urbanist'] capitalize">
             Investor
           </div>
@@ -109,9 +119,9 @@ function Distribution() {
             Vesting progress
           </div>
         </div>
-        <div className="w-[1295.55px] h-[0px] border border-[#18191c]/10"></div>
+        <div className="w-full h-[0px] border border-[#18191c]/10"></div>
         <div className="self-stretch h-[310px] flex-col justify-start items-start gap-[35px] flex">
-          <div className="w-[1295.55px] h-[34px] relative">
+          <div className="w-full h-[34px] relative">
             <div className="left-0 top-[11.50px] absolute text-[#18191c] text-[15px] font-semibold font-['Urbanist']">
               adam@presail.com
             </div>
@@ -133,7 +143,7 @@ function Distribution() {
                 50%
               </div>
             </div>
-            <div className="w-[127px] h-[34px] left-[554.17px] top-0 absolute flex-col justify-start items-start gap-[13px] inline-flex">
+            <div className="w-[127px] h-[34px] left-[554.17px] top-0 absolute flex-col justify-start items-start gap-[5px] inline-flex">
               <div className="self-stretch text-[#18191c] text-[15px] font-semibold font-['Urbanist']">
                 $8,000.00
               </div>
@@ -141,7 +151,7 @@ function Distribution() {
                 $7,200.00 after free
               </div>
             </div>
-            <div className="w-[98px] h-[34px] left-[889.60px] top-0 absolute flex-col justify-start items-start gap-[13px] inline-flex">
+            <div className="w-[98px] h-[34px] left-[889.60px] top-0 absolute flex-col justify-start items-start gap-[5px] inline-flex">
               <div className="self-stretch text-[#18191c] text-[15px] font-semibold font-['Urbanist']">
                 360,000 SAND
               </div>
@@ -150,7 +160,7 @@ function Distribution() {
               </div>
             </div>
           </div>
-          <div className="w-[1295.55px] h-[34px] relative">
+          <div className="w-full h-[34px] relative">
             <div className="left-0 top-[11.50px] absolute text-[#18191c] text-[15px] font-semibold font-['Urbanist']">
               adam@presail.com
             </div>
@@ -172,7 +182,7 @@ function Distribution() {
                 50%
               </div>
             </div>
-            <div className="w-[127px] h-[34px] left-[554.17px] top-0 absolute flex-col justify-start items-start gap-[13px] inline-flex">
+            <div className="w-[127px] h-[34px] left-[554.17px] top-0 absolute flex-col justify-start items-start gap-[5px] inline-flex">
               <div className="self-stretch text-[#18191c] text-[15px] font-semibold font-['Urbanist']">
                 $8,000.00
               </div>
@@ -180,7 +190,7 @@ function Distribution() {
                 $7,200.00 after free
               </div>
             </div>
-            <div className="w-[98px] h-[34px] left-[889.60px] top-0 absolute flex-col justify-start items-start gap-[13px] inline-flex">
+            <div className="w-[98px] h-[34px] left-[889.60px] top-0 absolute flex-col justify-start items-start gap-[5px] inline-flex">
               <div className="self-stretch text-[#18191c] text-[15px] font-semibold font-['Urbanist']">
                 360,000 SAND
               </div>
@@ -189,6 +199,7 @@ function Distribution() {
               </div>
             </div>
           </div>
+          {editing && <Editing handleEdit={handleEdit} />}
         </div>
       </div>
     </div>
