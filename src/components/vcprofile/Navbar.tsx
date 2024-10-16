@@ -3,7 +3,7 @@ import { FaPlus } from "react-icons/fa";
 
 function Navbar({ profile }) {
   return (
-    <div className="w-full py-[34.15px] justify-between items-start flex">
+    <div className="w-full py-[32px] justify-between items-start flex">
       <div className="ml-8 justify-start items-center gap-[17.07px] flex">
         <div className="text-[#18191c] text-[25.61px] font-extrabold font-['Plus Jakarta Sans'] leading-10">
           Hi, {profile?.name}

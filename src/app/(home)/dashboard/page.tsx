@@ -70,7 +70,7 @@ const Dashboard: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <header>
-        <div className=" mx-auto py-4 px-4 sm:px-6 lg:px-8">
+        <div className=" mx-auto pt-[32px] px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
@@ -95,7 +95,7 @@ const Dashboard: React.FC = () => {
               </button>
             </div>
           </div>
-          <div className="mt-8 bg-gray-200 p-2 rounded-full w-[30px]">
+          <div className="mt-[32px] mb-[24px] bg-gray-200 p-2 rounded-full w-[30px]">
             <FaArrowLeft
               className="text-gray-500 cursor-pointer"
               onClick={() => router.back()}

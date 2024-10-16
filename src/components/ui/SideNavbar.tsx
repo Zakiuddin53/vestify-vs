@@ -27,6 +27,10 @@ export function SideNavbar() {
     try {
       const response = await logout();
       if (response.success) {
+        // Remove the access_cookie
+        document.cookie =
+          "access_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        // Redirect to the login page
         router.push("/auth/login");
       } else {
         console.error("Logout failed:", response.message);
@@ -44,7 +48,7 @@ export function SideNavbar() {
           <Logo />
         </div>
 
-        <div className="flex flex-col space-y-6">
+        <div className="flex flex-col space-y-[16px]">
           {/* Home Icon */}
           <Link href="/dashboard">
             <Button
@@ -58,14 +62,16 @@ export function SideNavbar() {
           </Link>
 
           {/* Capital Icon */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="w-12 h-12 rounded-full text-white hover:bg-indigo-500 transition-colors"
-          >
-            <Capital />
-            <span className="sr-only">Capital</span>
-          </Button>
+          <Link href="/capital">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="w-12 h-12 rounded-full text-white hover:bg-indigo-500 transition-colors"
+            >
+              <Capital />
+              <span className="sr-only">Capital</span>
+            </Button>
+          </Link>
 
           {/* Profile Icon */}
           <Link href="/vc">
@@ -100,7 +106,7 @@ export function SideNavbar() {
             <DropdownMenuItem>Profile</DropdownMenuItem>
             <DropdownMenuItem>Billing</DropdownMenuItem>
             <DropdownMenuItem>Team</DropdownMenuItem>
-            <DropdownMenuItem>Subscription</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
 

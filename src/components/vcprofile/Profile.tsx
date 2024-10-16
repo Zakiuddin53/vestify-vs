@@ -1,4 +1,6 @@
 import React from "react";
+import discordicon from "@/public/Discord.svg";
+import Image from "next/image";
 
 function Profile({ profile }) {
   return (
@@ -20,7 +22,8 @@ function Profile({ profile }) {
           </div>
           <div className="h-[49.09px] p-[16.05px] left-[60px] top-[60.65px] absolute bg-[#b80000]/5 rounded-lg justify-start items-center gap-2 inline-flex">
             <div className="text-[#ea0000] text-2xl font-semibold font-['Urbanist'] leading-[32.81px]">
-              {profile?.kycDone ? "Approved" : "Pending"}
+              {/* {profile?.kycDone ? "Approved" : "Required"} */}
+              Required
             </div>
           </div>
         </div>
@@ -32,6 +35,18 @@ function Profile({ profile }) {
           </div>
           <div className="left-[20.57px] top-[20.29px] absolute text-[#18191c] text-[15px] font-medium font-['Urbanist'] leading-[17.39px]">
             Social Media:
+            {/* <div className="flex gap-2 flex-row justify-start items-start">
+              <Image
+                className="w-[20.57px] h-[20.57px] "
+                alt=""
+                src={discordicon}
+              />
+              <Image
+                className="w-[20.57px] h-[20.57px] "
+                alt=""
+                src={discordicon}
+              />
+            </div> */}
           </div>
         </div>
         <div className="w-[354.31px] h-[124.31px] relative">
