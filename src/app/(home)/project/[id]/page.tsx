@@ -22,7 +22,7 @@ const ProjectDetailsPage = async ({ params }: { params: { id: string } }) => {
       <div className="pt-[35px] w-full pb-8 bg-white flex-col justify-start items-end inline-flex">
         <div className="px-8 w-full flex-col justify-start items-start flex">
           <div className="flex-col w-full justify-start items-start gap-[30px] flex">
-            <div className=" w-full justify-end items-end gap-[103px] inline-flex">
+            <div className=" w-full justify-end items-center gap-[103px] inline-flex">
               <div className=" w-full flex-col justify-start items-start gap-6 inline-flex">
                 {/**Header */}
                 <div className="w-full flex-col justify-start items-start gap-[15px] flex">
@@ -42,7 +42,7 @@ const ProjectDetailsPage = async ({ params }: { params: { id: string } }) => {
                 <Profile token={token} project={project} />
               </div>
 
-              <div className="flex-col justify-start items-end gap-[25px] inline-flex">
+              <div className="h-full w-full  flex-col justify-end  items-end gap-[25px] inline-flex">
                 <div className="w-[84.84px] h-[84.84px] bg-[#d9d9d9] rounded-[60px]" />
                 <div className="flex-col justify-start items-end gap-[15px] flex">
                   <div className="text-black text-[22px] font-extrabold font-['Urbanist'] leading-loose">
@@ -52,11 +52,11 @@ const ProjectDetailsPage = async ({ params }: { params: { id: string } }) => {
                     Your allocation
                   </div>
                 </div>
-                <div className="px-[33px] py-[15px] bg-[#303138] rounded-lg justify-center items-center gap-2.5 inline-flex">
+                {/* <div className="px-[33px] py-[15px] bg-[#303138] rounded-lg justify-center items-center gap-2.5 inline-flex">
                   <div className="text-white text-[15px] font-semibold font-['Urbanist'] leading-snug">
                     Contribute
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -77,7 +77,7 @@ const ProjectDetailsPage = async ({ params }: { params: { id: string } }) => {
 
                 {/**Deal Info */}
 
-                <Deal project={project} />
+                <Deal socialLink={socialLink} />
               </div>
             </div>
           </div>

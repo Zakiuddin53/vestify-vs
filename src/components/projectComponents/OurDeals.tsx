@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface OurDealsProps {
   onComplete: (data: {
@@ -10,13 +10,36 @@ interface OurDealsProps {
       poolFee: number;
     };
   }) => void;
+  initialData?: {
+    maximum: number;
+    minimum: number;
+    acceptedTokens: string;
+    poolFee: number;
+  };
 }
 
-const OurDeals: React.FC<OurDealsProps> = ({ onComplete }) => {
-  const [minimum, setMinimum] = useState<string>("");
-  const [maximum, setMaximum] = useState<string>("");
-  const [acceptedTokens, setAcceptedTokens] = useState<string>("");
-  const [poolFee, setPoolFee] = useState<string>("");
+const OurDeals: React.FC<OurDealsProps> = ({ onComplete, initialData }) => {
+  const [minimum, setMinimum] = useState<string>(
+    initialData?.minimum.toString() || ""
+  );
+  const [maximum, setMaximum] = useState<string>(
+    initialData?.maximum.toString() || ""
+  );
+  const [acceptedTokens, setAcceptedTokens] = useState<string>(
+    initialData?.acceptedTokens || ""
+  );
+  const [poolFee, setPoolFee] = useState<string>(
+    initialData?.poolFee.toString() || ""
+  );
+
+  useEffect(() => {
+    if (initialData) {
+      setMinimum(initialData.minimum.toString());
+      setMaximum(initialData.maximum.toString());
+      setAcceptedTokens(initialData.acceptedTokens);
+      setPoolFee(initialData.poolFee.toString());
+    }
+  }, [initialData]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

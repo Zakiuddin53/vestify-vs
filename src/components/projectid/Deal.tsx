@@ -1,6 +1,7 @@
 import React from "react";
 
-function Deal({ project }) {
+function Deal({ socialLink }) {
+  console.log("deal", socialLink);
   return (
     <div className="p-5 h-full bg-neutral-100 rounded-[10px] flex-col justify-start items-start gap-[30px] inline-flex">
       <div className="text-[#18191c] text-2xl font-bold font-['Urbanist'] leading-loose">
