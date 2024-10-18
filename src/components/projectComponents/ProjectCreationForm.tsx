@@ -197,11 +197,11 @@ const ProjectCreationForm: React.FC<{
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 px-4">
+    <div className="max-w-xl min-h-screen mx-auto mt-10 px-4">
       <div className="mb-8">
         <StepIndicator currentStep={step} steps={steps} />
       </div>
-      <div className="h-[100vh] bg-white border border-gray-200 rounded-lg p-6">
+      <div className=" bg-white border border-gray-200 rounded-lg p-6">
         {CurrentStepComponent && (
           <CurrentStepComponent
             onComplete={(data) => handleStepComplete(data)}

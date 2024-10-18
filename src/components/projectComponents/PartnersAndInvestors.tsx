@@ -66,7 +66,7 @@ const PartnersAndInvestors: React.FC<PartnersAndInvestorsProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6 text-black">
       <h2 className="text-2xl font-bold mb-6 text-black">
         Partners & Investors
       </h2>

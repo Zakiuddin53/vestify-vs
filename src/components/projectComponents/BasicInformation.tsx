@@ -33,17 +33,20 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ onComplete }) => {
   };
 
   const categoryOptions = ["DeFi", "NFT", "GameFi", "Infrastructure"];
-  const roundOptions = [
-    "PRE SEED",
-    "SEED",
-    "PRIVATE 1",
-    "PRIVATE 2",
-    "PRIVATE 3",
-    "PUBLIC",
-  ];
+  // const roundOptions = [
+  //   "PRE_SEED",
+  //   "SEED",
+  //   "PRIVATE_1",
+  //   "PRIVATE_2",
+  //   "PRIVATE_3",
+  //   "PUBLIC",
+  // ];
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6  mx-auto">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-6 bg-white p-6  mx-auto text-black"
+    >
       <h2 className="text-2xl font-bold text-center mb-6 text-black text-center">
         Basic Information
       </h2>
@@ -99,7 +102,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ onComplete }) => {
         />
       </div>
 
-      <div>
+      {/* <div>
         <label
           htmlFor="projectRound"
           className="block mb-2 text-sm font-medium text-gray-700"
@@ -112,7 +115,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ onComplete }) => {
           onChange={setRound}
           placeholder="Select Project round"
         />
-      </div>
+      </div> */}
 
       <button
         type="submit"

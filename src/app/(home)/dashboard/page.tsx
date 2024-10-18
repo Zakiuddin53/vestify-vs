@@ -39,9 +39,10 @@ const Dashboard: React.FC = () => {
         const vcId = decodedToken.user.id;
 
         const response = await getVCProjects(vcId);
+        console.log(response);
         if (response.success) {
           setProjects(
-            response.data.map((project) => ({
+            response.data.projects.map((project) => ({
               ...project,
               status: Math.random() > 0.5 ? "Success" : "In Progress",
               progress: Math.floor(Math.random() * 100),

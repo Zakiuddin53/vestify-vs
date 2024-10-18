@@ -43,7 +43,7 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6 text-black">
       <h2 className="text-2xl font-bold mb-6 text-black text-center">
         Token Metrics
       </h2>
@@ -57,7 +57,7 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
         </label>
         <input
           id="allocation"
-          type="text"
+          type="number"
           value={allocation}
           onChange={(e) => setAllocation(e.target.value)}
           placeholder="Enter Allocation"
@@ -72,7 +72,7 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
         </label>
         <input
           id="fdv"
-          type="text"
+          type="number"
           value={fdv}
           onChange={(e) => setFdv(e.target.value)}
           placeholder="Enter FDV"
@@ -87,7 +87,7 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
         </label>
         <input
           id="price"
-          type="text"
+          type="number"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           placeholder="Enter price"
@@ -105,7 +105,7 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
         </label>
         <input
           id="tgeUnlock"
-          type="text"
+          type="number"
           value={tgeUnlock}
           onChange={(e) => setTgeUnlock(e.target.value)}
           placeholder="Enter TGE unlock"
@@ -116,7 +116,7 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
 
       <div>
         <label htmlFor="tge" className="block mb-2 font-medium text-black">
-          TGE Date
+          TGE
         </label>
         <input
           id="tge"
@@ -130,7 +130,7 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({ onComplete }) => {
 
       <div>
         <label htmlFor="vesting" className="block mb-2 font-medium text-black">
-          Vesting Date
+          TGE Summary
         </label>
         <input
           id="vesting"
