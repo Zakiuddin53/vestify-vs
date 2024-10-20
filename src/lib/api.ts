@@ -284,11 +284,12 @@ export interface ProjectDetails {
     tokensReceived: string;
   };
   token: {
-    allocation: string;
-    vesting: string;
-    tge: string;
-    tgeUnlock: string;
+    round: string;
+    fdv: string;
     price: string;
+    tgeUnlock: string;
+    tge: string;
+    tgeSummary: string;
   };
   socialLink: {
     medium?: string;
