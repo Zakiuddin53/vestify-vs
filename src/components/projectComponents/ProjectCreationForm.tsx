@@ -36,6 +36,8 @@ const ProjectCreationForm: React.FC<{
       minimum: number;
       acceptedTokens: string;
       poolFee: number;
+      startDate: string;
+      endDate: string;
     };
     teamAndAdvisors: { name: string; title: string; description: string }[];
     partnersAndInvestors: any[];
@@ -62,6 +64,8 @@ const ProjectCreationForm: React.FC<{
       minimum: 0,
       acceptedTokens: "",
       poolFee: 0,
+      startDate: "",
+      endDate: "",
     },
     teamAndAdvisors: [],
     partnersAndInvestors: [],

@@ -279,7 +279,7 @@ export interface ProjectDetails {
   project: {
     name: string;
     description: string;
-    round: string;
+
     categories: string[];
     tokensReceived: string;
   };
@@ -291,6 +291,14 @@ export interface ProjectDetails {
     tge: string;
     tgeSummary: string;
   };
+  deals: {
+    maximum: number;
+    minimum: number;
+    acceptedTokens: string;
+    poolFee: number;
+    startDate: string;
+    endDate: string;
+  };
   socialLink: {
     medium?: string;
     discord?: string;
@@ -299,7 +307,9 @@ export interface ProjectDetails {
   };
   teamAndAdvisors: Array<{
     name: string;
-    imgBase64: string;
+    title: string;
+    description: string;
+    logoBase64?: string;
   }>;
   partnersAndInvestors: Array<{
     name: string;

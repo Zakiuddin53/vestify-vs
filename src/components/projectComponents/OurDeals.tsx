@@ -8,8 +8,8 @@ interface OurDealsProps {
       minimum: number;
       acceptedTokens: string;
       poolFee: number;
-      tge: string; // Added TGE field
-      vesting: string; // Added Vesting field
+      startDate: string;
+      endDate: string;
     };
   }) => void;
   initialData?: {
@@ -17,8 +17,8 @@ interface OurDealsProps {
     minimum: number;
     acceptedTokens: string;
     poolFee: number;
-    tge: string; // Initial TGE
-    vesting: string; // Initial Vesting
+    startDate: string; // Initial TGE
+    endDate: string; // Initial Vesting
   };
 }
 
@@ -35,8 +35,8 @@ const OurDeals: React.FC<OurDealsProps> = ({ onComplete, initialData }) => {
   const [poolFee, setPoolFee] = useState<string>(
     initialData?.poolFee !== undefined ? initialData.poolFee.toString() : ""
   );
-  const [tge, setTge] = useState<string>(initialData?.tge || ""); // State for TGE
-  const [vesting, setVesting] = useState<string>(initialData?.vesting || ""); // State for Vesting
+  const [tge, setTge] = useState<string>(initialData?.startDate || ""); // State for TGE
+  const [vesting, setVesting] = useState<string>(initialData?.endDate || ""); // State for Vesting
 
   useEffect(() => {
     if (initialData) {
@@ -44,8 +44,8 @@ const OurDeals: React.FC<OurDealsProps> = ({ onComplete, initialData }) => {
       setMaximum(initialData?.maximum?.toString());
       setAcceptedTokens(initialData?.acceptedTokens);
       setPoolFee(initialData?.poolFee?.toString());
-      setTge(initialData?.tge);
-      setVesting(initialData?.vesting);
+      setTge(initialData?.startDate);
+      setVesting(initialData?.endDate);
     }
   }, [initialData]);
 
@@ -57,8 +57,8 @@ const OurDeals: React.FC<OurDealsProps> = ({ onComplete, initialData }) => {
         minimum: parseFloat(minimum),
         acceptedTokens,
         poolFee: parseFloat(poolFee),
-        tge, // Include TGE
-        vesting, // Include Vesting
+        startDate: tge,
+        endDate: vesting,
       },
     });
   };
@@ -68,11 +68,14 @@ const OurDeals: React.FC<OurDealsProps> = ({ onComplete, initialData }) => {
       <h2 className="text-2xl font-bold mb-6 text-black">Our Deals</h2>
 
       <div>
-        <label htmlFor="tge" className="block mb-2 font-medium text-black">
+        <label
+          htmlFor="startDate"
+          className="block mb-2 font-medium text-black"
+        >
           Start Date
         </label>
         <input
-          id="tge"
+          id="startDate"
           type="date"
           value={tge}
           onChange={(e) => setTge(e.target.value)} // Update state for TGE
@@ -82,11 +85,11 @@ const OurDeals: React.FC<OurDealsProps> = ({ onComplete, initialData }) => {
       </div>
 
       <div>
-        <label htmlFor="vesting" className="block mb-2 font-medium text-black">
+        <label htmlFor="endDate" className="block mb-2 font-medium text-black">
           End Date
         </label>
         <input
-          id="vesting"
+          id="endDate"
           type="date"
           value={vesting}
           onChange={(e) => setVesting(e.target.value)} // Update state for Vesting
