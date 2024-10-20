@@ -17,6 +17,8 @@ const ProjectDetailsPage = async ({ params }: { params: { id: string } }) => {
   const { project, token, socialLink, teamAndAdvisors, partnersAndInvestors } =
     projectDetails.data;
 
+  console.log(" projectDetails", projectDetails.data);
+
   return (
     <div className="h-[100vh] w-full bg-white items-start inline-flex overflow-y-scroll">
       <div className="pt-[35px] w-full pb-8 bg-white flex-col justify-start items-end inline-flex">
@@ -68,7 +70,7 @@ const ProjectDetailsPage = async ({ params }: { params: { id: string } }) => {
                   <About project={project} />
                   {/**Team */}
 
-                  <Team project={project} />
+                  <Team teamAndAdvisors={teamAndAdvisors} />
 
                   {/**Partners and Investors*/}
 

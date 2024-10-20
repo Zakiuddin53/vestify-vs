@@ -634,7 +634,9 @@ const ProjectCreationForm: React.FC<{
     { name: "Token Metrics", component: TokenMetrics },
     { name: "Our Deals", component: OurDeals },
     { name: "Team & Advisors", component: TeamAndAdvisors },
+
     { name: "Partners & Investors", component: PartnersAndInvestors },
+
     { name: "Socials", component: Socials },
   ];
 

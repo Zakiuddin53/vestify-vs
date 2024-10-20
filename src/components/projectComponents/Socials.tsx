@@ -201,7 +201,7 @@ const Socials: React.FC<SocialsProps> = ({ onComplete }) => {
 
     switch (platform) {
       case "x":
-        regex = /^(https?:\/\/)?(www\.)?(twitter\.com\/\S+)/;
+        regex = /^(https?:\/\/)?(www\.)?(x\.com\/\S+)/;
         break;
       case "instagram":
         regex = /^(https?:\/\/)?(www\.)?(instagram\.com\/\S+)/;

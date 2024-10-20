@@ -2,7 +2,7 @@ import React from "react";
 
 function Descp({ profile }) {
   return (
-    <div className="h-[280px] w-full flex-col justify-start items-start gap-[15px] flex">
+    <div className="h-full w-full flex-col justify-start items-start gap-[15px] flex">
       <div className="text-[#18191c] text-[25px] font-bold font-['Urbanist'] leading-7">
         VC Description
       </div>

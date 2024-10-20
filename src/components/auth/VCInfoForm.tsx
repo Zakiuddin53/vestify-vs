@@ -85,7 +85,7 @@ const VCInfoForm: React.FC<VCInfoFormProps> = ({ onSubmit }) => {
 
         <form
           onSubmit={handleSubmit(onSubmitWrapper)}
-          className="w-full self-stretch flex-col justify-start items-center gap-6 flex"
+          className="w-full self-stretch flex-col justify-start items-center gap-6 flex text-black"
         >
           {/* Logo upload */}
           <div className="w-full self-stretch flex-col justify-start items-start gap-1 flex">
@@ -160,7 +160,7 @@ const VCInfoForm: React.FC<VCInfoFormProps> = ({ onSubmit }) => {
             <textarea
               {...register("description")}
               placeholder="VC Description"
-              className='w-full self-stretch h-[87px] p-4 bg-white rounded-md border border-[#d0d5dd]/60 text-[#98a1b2] text-sm font-normal font-["Urbanist"] leading-tight resize-none'
+              className='w-full self-stretch h-[87px] p-4 bg-white rounded-md border border-[#d0d5dd]/60  text-sm font-normal font-["Urbanist"] leading-tight resize-none'
             />
             {errors.description && (
               <p className="text-red-500 text-xs mt-1">

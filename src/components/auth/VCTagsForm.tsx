@@ -148,16 +148,16 @@ const VCTagsForm: React.FC<VCTagsFormProps> = ({
           </div>
 
           {/* Subscription fee */}
-          <div className="w-[400px] h-[53px]  flex justify-between align-middle items-center bg-[#f2f2ff] rounded-tl-[8px]">
+          <div className="w-[400px] h-[53px] px-2  flex justify-between align-middle items-center bg-[#f2f2ff] rounded-tl-[8px]">
             <span className="text-lg font-medium text-[#101828]">
               Subscription fee
             </span>
-            <div className="flex items-center">
-              <span className="mr-1 text-lg font-black text-[#101828]">$</span>
+            <div className="">
+              <span className=" text-lg font-black text-[#101828]">$</span>
               <input
                 type="number"
                 {...register("subscriptionFee", { valueAsNumber: true })}
-                className="w-20 text-lg font-black text-[#101828] bg-transparent border-none text-right outline-none"
+                className=" w-[50px] text-lg font-black text-[#101828] bg-transparent border-none outline-none"
               />
             </div>
           </div>

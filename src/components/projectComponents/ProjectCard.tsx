@@ -19,7 +19,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const toggleDescription = () => setIsExpanded(!isExpanded);
 
   return (
-    <div className="w-full p-4 bg-white rounded-3xl shadow-sm flex flex-col gap-4">
+    <div className="w-[308px] h-[312px] p-4 bg-white rounded-3xl shadow-sm flex flex-col gap-4">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center">

@@ -313,6 +313,7 @@ export const getProjectDetails = async (
     const response = await api.get<ApiResponse<ProjectDetails>>(
       `/api/project/${projectId}`
     );
+    console.log("getProjectDetails response:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching project details:", error);

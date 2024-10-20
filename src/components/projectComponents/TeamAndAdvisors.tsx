@@ -135,6 +135,7 @@ interface TeamMember {
   name: string;
   title: string;
   description: string;
+  logoBase64?: string; // Added logo field
 }
 
 interface TeamAndAdvisorsProps {
@@ -152,7 +153,9 @@ const TeamAndAdvisors: React.FC<TeamAndAdvisorsProps> = ({
     if (initialData && initialData.length > 0) {
       setTeamMembers(initialData);
     } else {
-      setTeamMembers([{ name: "", title: "", description: "" }]); // Start with one empty form
+      setTeamMembers([
+        { name: "", title: "", description: "", logoBase64: "" },
+      ]); // Start with one empty form
     }
   }, [initialData]);
 
@@ -170,8 +173,31 @@ const TeamAndAdvisors: React.FC<TeamAndAdvisorsProps> = ({
     setTeamMembers(updatedMembers);
   };
 
+  const handleLogoChange = (
+    index: number,
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const updatedMembers = teamMembers.map((member, i) => {
+          if (i === index) {
+            return { ...member, logoBase64: reader.result as string }; // Set the logoBase64
+          }
+          return member;
+        });
+        setTeamMembers(updatedMembers);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const addTeamMember = () => {
-    setTeamMembers([...teamMembers, { name: "", title: "", description: "" }]);
+    setTeamMembers([
+      ...teamMembers,
+      { name: "", title: "", description: "", logoBase64: "" },
+    ]);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -245,6 +271,49 @@ const TeamAndAdvisors: React.FC<TeamAndAdvisorsProps> = ({
               rows={3}
               required
             />
+          </div>
+
+          <div>
+            <label
+              htmlFor={`logoUpload-${index}`}
+              className="block mb-2 font-medium text-black"
+            >
+              Partner Logo
+            </label>
+            <div className="flex items-center space-x-2">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleLogoChange(index, e)}
+                className="hidden"
+                id={`logoUpload-${index}`}
+              />
+              <label
+                htmlFor={`logoUpload-${index}`}
+                className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 cursor-pointer"
+              >
+                <svg
+                  className="mr-2 h-5 w-5 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                  />
+                </svg>
+                Upload
+              </label>
+              <span className="text-xs text-gray-500">
+                SVG, PNG, JPG • Max. 5MB
+              </span>
+            </div>
+            {member.logoBase64 && (
+              <p className="mt-1 text-sm text-gray-600">Logo uploaded</p>
+            )}
           </div>
         </div>
       ))}

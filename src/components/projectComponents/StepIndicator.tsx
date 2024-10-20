@@ -27,7 +27,7 @@ const StepIndicator: React.FC<StepIndicatorProps> = ({
           >
             {index + 1}
           </div>
-          <span className="text-xs mt-1">{step.name}</span>
+          <span className="text-xs mt-1 text-[#667185]">{step.name}</span>
         </div>
       ))}
     </div>

@@ -6,15 +6,15 @@ function Profile({ token, project }) {
       <div className="justify-start items-start gap-6 inline-flex">
         <div className="p-[15px] bg-[#f3f3f3] rounded-[10px] flex-col justify-start items-start gap-[15px] inline-flex">
           <div className="text-black text-[25px] font-extrabold font-['Urbanist'] leading-9">
-            ${token.price}
+            ${token?.price}
           </div>
           <div className="text-[#6c6c6c] text-base font-semibold font-['Urbanist'] leading-normal">
-            {project.round}
+            {project?.round}
           </div>
         </div>
         <div className="p-[15px] bg-[#f3f3f3] rounded-[10px] flex-col justify-start items-start gap-[15px] inline-flex">
           <div className="text-black text-[25px] font-extrabold font-['Urbanist'] leading-9">
-            {project.tokensReceived}
+            {project?.tokensReceived}
           </div>
           <div className="text-[#6c6c6c] text-base font-semibold font-['Urbanist'] leading-normal">
             Tokens received

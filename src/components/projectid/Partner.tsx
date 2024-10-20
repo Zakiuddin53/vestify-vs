@@ -13,8 +13,8 @@ function Partner({ partnersAndInvestors }) {
             <img
               key={index}
               className="w-[124.27px] h-[25px]"
-              src={`data:image/png;base64,${partner.logoBase64}`}
-              alt={partner.name}
+              src={partner?.logoBase64}
+              alt={partner?.name}
             />
           ))}
         </div>
