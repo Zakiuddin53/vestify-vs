@@ -5,7 +5,7 @@ interface TeamMember {
   name: string;
   title: string;
   description: string;
-  logoBase64?: string; // Added logo field
+  imgBase64?: string;
 }
 
 interface TeamAndAdvisorsProps {
@@ -23,9 +23,7 @@ const TeamAndAdvisors: React.FC<TeamAndAdvisorsProps> = ({
     if (initialData && initialData.length > 0) {
       setTeamMembers(initialData);
     } else {
-      setTeamMembers([
-        { name: "", title: "", description: "", logoBase64: "" },
-      ]); // Start with one empty form
+      setTeamMembers([{ name: "", title: "", description: "", imgBase64: "" }]); // Start with one empty form
     }
   }, [initialData]);
 
@@ -53,7 +51,7 @@ const TeamAndAdvisors: React.FC<TeamAndAdvisorsProps> = ({
       reader.onloadend = () => {
         const updatedMembers = teamMembers.map((member, i) => {
           if (i === index) {
-            return { ...member, logoBase64: reader.result as string }; // Set the logoBase64
+            return { ...member, imgBase64: reader.result as string };
           }
           return member;
         });
@@ -66,7 +64,7 @@ const TeamAndAdvisors: React.FC<TeamAndAdvisorsProps> = ({
   const addTeamMember = () => {
     setTeamMembers([
       ...teamMembers,
-      { name: "", title: "", description: "", logoBase64: "" },
+      { name: "", title: "", description: "", imgBase64: "" },
     ]);
   };
 
@@ -181,7 +179,7 @@ const TeamAndAdvisors: React.FC<TeamAndAdvisorsProps> = ({
                 SVG, PNG, JPG • Max. 5MB
               </span>
             </div>
-            {member.logoBase64 && (
+            {member.imgBase64 && (
               <p className="mt-1 text-sm text-gray-600">Logo uploaded</p>
             )}
           </div>

@@ -7,8 +7,35 @@ import OurDeals from "./OurDeals";
 import TeamAndAdvisors from "./TeamAndAdvisors";
 import PartnersAndInvestors from "./PartnersAndInvestors";
 import Socials from "./Socials";
-import { createProject, ProjectData } from "@/lib/api";
+import { createProject, ProjectRound } from "@/lib/api";
 import StepIndicator from "./StepIndicator";
+
+type ProjectDataState = {
+  info: {
+    name: string;
+    categories: string[];
+    description: string;
+  };
+  tokenMetrics: {
+    round: ProjectRound;
+    fdv: string;
+    price: string;
+    tgeUnlock: string;
+    tge: string;
+    tgeSummary: string;
+  }[];
+  deals: {
+    maximum: number;
+    minimum: number;
+    acceptedTokens: string;
+    poolFee: number;
+    startDate: string;
+    endDate: string;
+  };
+  teamAndAdvisors: any[];
+  partnersAndInvestors: any[];
+  projectSocials: Record<string, string>;
+};
 
 const ProjectCreationForm: React.FC<{
   step: number;
@@ -16,42 +43,15 @@ const ProjectCreationForm: React.FC<{
 }> = ({ step, setStep }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [projectData, setProjectData] = useState<{
-    info: {
-      name: string;
-      category: string;
-      description: string;
-      round: string;
-    };
-    tokenMetrics: {
-      round: string;
-      fdv: string;
-      price: string;
-      tgeUnlock: string;
-      tge: string;
-      tgeSummary: string;
-    }[];
-    deals: {
-      maximum: number;
-      minimum: number;
-      acceptedTokens: string;
-      poolFee: number;
-      startDate: string;
-      endDate: string;
-    };
-    teamAndAdvisors: { name: string; title: string; description: string }[];
-    partnersAndInvestors: any[];
-    projectSocials: Record<string, string>;
-  }>({
+  const [projectData, setProjectData] = useState<ProjectDataState>({
     info: {
       name: "",
-      category: "",
+      categories: [],
       description: "",
-      round: "",
     },
     tokenMetrics: [
       {
-        round: "",
+        round: "" as ProjectRound,
         fdv: "",
         price: "",
         tgeUnlock: "",
@@ -77,12 +77,9 @@ const ProjectCreationForm: React.FC<{
   const steps = [
     { name: "Basic Information", component: BasicInformation },
     { name: "Token Metrics", component: TokenMetrics },
-
     { name: "Our Deals", component: OurDeals },
     { name: "Team & Advisors", component: TeamAndAdvisors },
-
     { name: "Partners & Investors", component: PartnersAndInvestors },
-
     { name: "Socials", component: Socials },
   ];
 

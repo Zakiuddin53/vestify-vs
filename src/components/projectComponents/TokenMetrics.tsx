@@ -34,29 +34,34 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({
       tgeUnlock: string;
       tge: string;
       tgeSummary: string;
-      round: string; // Include round here
+      round: string;
     }[]
   >(Array.isArray(initialData) ? initialData : []);
 
-  console.log(rounds);
   const [currentRound, setCurrentRound] = useState({
     fdv: "",
     price: "",
     tgeUnlock: "",
     tge: "",
     tgeSummary: "",
-    round: "", // Added here to hold the selected round value
+    round: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newRound = {
       ...currentRound,
+      tge: new Date(currentRound.tge).toISOString(),
+      tgeSummary: new Date(currentRound.tgeSummary).toISOString(),
     };
 
-    setRounds([...rounds, newRound]);
+    const updatedRounds = [...rounds, newRound];
+    const filteredRounds = updatedRounds.filter((round) =>
+      Object.values(round).some((value) => value !== "")
+    );
+    setRounds(filteredRounds);
     resetCurrentRound();
-    onComplete({ tokenMetrics: [...rounds, newRound] });
+    onComplete({ tokenMetrics: filteredRounds });
   };
 
   const resetCurrentRound = () => {
@@ -66,7 +71,7 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({
       tgeUnlock: "",
       tge: "",
       tgeSummary: "",
-      round: "", // Reset round value
+      round: "",
     });
   };
 
@@ -104,9 +109,9 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({
           </label>
           <Dropdown
             options={roundOptions}
-            value={currentRound.round} // Use the value from currentRound
-            onChange={
-              (value) => setCurrentRound({ ...currentRound, round: value }) // Set the selected round
+            value={currentRound.round}
+            onChange={(value) =>
+              setCurrentRound({ ...currentRound, round: value })
             }
             placeholder="Select Round"
           />

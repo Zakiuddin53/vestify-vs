@@ -7,16 +7,14 @@ interface BasicInformationProps {
   onComplete: (data: {
     info: {
       name: string;
-      category: string;
+      categories: string[];
       description: string;
-      round: string;
     };
   }) => void;
   initialData?: {
     name: string;
-    category: string;
+    categories: string[];
     description: string;
-    round: string;
   };
 }
 
@@ -28,15 +26,15 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
   const [description, setDescription] = useState(
     initialData?.description || ""
   );
-  const [category, setCategory] = useState(initialData?.category || "");
-  const [round, setRound] = useState(initialData?.round || "");
+  const [categories, setCategories] = useState<string[]>(
+    initialData?.categories || []
+  );
 
   useEffect(() => {
     if (initialData) {
       setName(initialData.name);
       setDescription(initialData.description);
-      setCategory(initialData.category);
-      setRound(initialData.round);
+      setCategories(initialData.categories);
     }
   }, [initialData]);
 
@@ -45,23 +43,13 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
     onComplete({
       info: {
         name,
-        category,
+        categories,
         description,
-        round,
       },
     });
   };
 
   const categoryOptions = ["DeFi", "NFT", "GameFi", "Infrastructure"];
-  // Uncomment and populate round options if needed
-  // const roundOptions = [
-  //   "PRE_SEED",
-  //   "SEED",
-  //   "PRIVATE_1",
-  //   "PRIVATE_2",
-  //   "PRIVATE_3",
-  //   "PUBLIC",
-  // ];
 
   return (
     <form
@@ -110,34 +98,19 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
 
       <div>
         <label
-          htmlFor="projectCategory"
+          htmlFor="projectCategories"
           className="block mb-2 text-sm font-medium text-gray-700"
         >
-          Project Category
+          Project Categories
         </label>
         <Dropdown
           options={categoryOptions}
-          value={category}
-          onChange={setCategory}
-          placeholder="Select Project category"
+          value={categories}
+          onChange={(selected) => setCategories(selected)}
+          placeholder="Select Project categories"
+          multiple={true}
         />
       </div>
-
-      {/* Uncomment if using rounds */}
-      {/* <div>
-        <label
-          htmlFor="projectRound"
-          className="block mb-2 text-sm font-medium text-gray-700"
-        >
-          Project Round
-        </label>
-        <Dropdown
-          options={roundOptions}
-          value={round}
-          onChange={setRound}
-          placeholder="Select Project round"
-        />
-      </div> */}
 
       <button
         type="submit"

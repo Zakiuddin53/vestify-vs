@@ -14,27 +14,12 @@ interface SocialsProps {
 }
 
 const Socials: React.FC<SocialsProps> = ({ onComplete }) => {
-  const [socials, setSocials] = useState({
-    x: "",
-    instagram: "",
-    discord: "",
-    telegram: "",
-    medium: "",
-    youtube: "",
-  });
+  const [socials, setSocials] = useState<Record<string, string>>({});
 
-  const [errors, setErrors] = useState<Record<string, string | null>>({
-    x: null,
-    instagram: null,
-    discord: null,
-    telegram: null,
-    medium: null,
-    youtube: null,
-  });
+  const [errors, setErrors] = useState<Record<string, string | null>>({});
 
   const handleChange =
-    (platform: keyof typeof socials) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (platform: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       setSocials((prev) => ({ ...prev, [platform]: value }));
 
@@ -42,8 +27,8 @@ const Socials: React.FC<SocialsProps> = ({ onComplete }) => {
       setErrors((prev) => ({ ...prev, [platform]: null }));
     };
 
-  const validateInput = (platform: keyof typeof socials, value: string) => {
-    if (value === "") return; // Skip validation for empty input
+  const validateInput = (platform: string, value: string) => {
+    if (value === "") return;
 
     let regex;
 
@@ -83,18 +68,26 @@ const Socials: React.FC<SocialsProps> = ({ onComplete }) => {
 
     // Validate all inputs before submitting
     Object.keys(socials).forEach((platform) => {
-      validateInput(
-        platform as keyof typeof socials,
-        socials[platform as keyof typeof socials]
-      );
+      validateInput(platform, socials[platform]);
     });
 
     // Check for any errors, but allow empty fields
     if (Object.values(errors).some((error) => error && error !== null)) {
-      return; // Prevent submission if there are errors
+      return;
     }
 
-    onComplete({ projectSocials: socials });
+    // Filter out empty social media links
+    const filteredSocials = Object.entries(socials).reduce(
+      (acc, [key, value]) => {
+        if (value.trim() !== "") {
+          acc[key] = value.trim();
+        }
+        return acc;
+      },
+      {} as Record<string, string>
+    );
+
+    onComplete({ projectSocials: filteredSocials });
   };
 
   const socialIcons = {
@@ -108,36 +101,38 @@ const Socials: React.FC<SocialsProps> = ({ onComplete }) => {
 
   return (
     <div className="w-full max-w-md mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-6 text-center text-black">TGE</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center text-black">
+        Socials
+      </h2>
       <form onSubmit={handleSubmit}>
         <div className="space-y-4">
-          {(Object.keys(socials) as Array<keyof typeof socials>).map(
-            (platform) => {
-              const Icon = socialIcons[platform];
-              return (
-                <div key={platform} className="flex flex-col">
-                  <div className="flex items-center bg-white border rounded-md overflow-hidden">
-                    <div className="p-3 bg-gray-100">
-                      <Icon className="w-6 h-6 text-gray-600" />
-                    </div>
-                    <input
-                      type="text"
-                      placeholder={`Enter ${platform} link here`}
-                      className="flex-grow p-3 outline-none text-gray-600"
-                      value={socials[platform]}
-                      onChange={handleChange(platform)}
-                      onBlur={() => validateInput(platform, socials[platform])} // Validate on blur
-                    />
+          {Object.keys(socialIcons).map((platform) => {
+            const Icon = socialIcons[platform as keyof typeof socialIcons];
+            return (
+              <div key={platform} className="flex flex-col">
+                <div className="flex items-center bg-white border rounded-md overflow-hidden">
+                  <div className="p-3 bg-gray-100">
+                    <Icon className="w-6 h-6 text-gray-600" />
                   </div>
-                  {errors[platform] && (
-                    <span className="text-red-600 text-sm mt-1">
-                      {errors[platform]}
-                    </span>
-                  )}
+                  <input
+                    type="text"
+                    placeholder={`Enter ${platform} link here`}
+                    className="flex-grow p-3 outline-none text-gray-600"
+                    value={socials[platform] || ""}
+                    onChange={handleChange(platform)}
+                    onBlur={() =>
+                      validateInput(platform, socials[platform] || "")
+                    }
+                  />
                 </div>
-              );
-            }
-          )}
+                {errors[platform] && (
+                  <span className="text-red-600 text-sm mt-1">
+                    {errors[platform]}
+                  </span>
+                )}
+              </div>
+            );
+          })}
         </div>
         <button
           type="submit"
