@@ -314,6 +314,7 @@ export interface ProjectDetails {
     discord?: string;
     x?: string;
     telegram?: string;
+    youtube?: string;
   };
   teamAndAdvisors: Array<{
     name: string;

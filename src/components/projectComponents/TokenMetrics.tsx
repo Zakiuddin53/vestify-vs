@@ -41,10 +41,10 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({
   const [currentRound, setCurrentRound] = useState({
     fdv: "",
     price: "",
-    tgeUnlock: "",
+    tgeUnlock: "Yes", // Default to a string
     tge: "",
     tgeSummary: "",
-    round: "",
+    round: "", // Keep as a string
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -55,23 +55,39 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({
       tgeSummary: new Date(currentRound.tgeSummary).toISOString(),
     };
 
+    // Adding the new round to the existing rounds
     const updatedRounds = [...rounds, newRound];
+
+    // Filter rounds with at least one non-empty value and send the correct structure
     const filteredRounds = updatedRounds.filter((round) =>
       Object.values(round).some((value) => value !== "")
     );
+
+    // Make sure `round` is sent as a string by mapping over rounds
+    const roundsAsStrings = filteredRounds.map((round) => ({
+      round: round.round,
+      fdv: round.fdv,
+      price: round.price,
+      tgeUnlock: round.tgeUnlock,
+      tge: round.tge,
+      tgeSummary: round.tgeSummary,
+    }));
+
     setRounds(filteredRounds);
     resetCurrentRound();
-    onComplete({ tokenMetrics: filteredRounds });
+
+    // Calling the onComplete function, passing the modified data
+    onComplete({ tokenMetrics: roundsAsStrings });
   };
 
   const resetCurrentRound = () => {
     setCurrentRound({
       fdv: "",
       price: "",
-      tgeUnlock: "",
+      tgeUnlock: "Yes", // Reset to default
       tge: "",
       tgeSummary: "",
-      round: "",
+      round: "", // Reset to empty string
     });
   };
 
@@ -110,8 +126,8 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({
           <Dropdown
             options={roundOptions}
             value={currentRound.round}
-            onChange={(value) =>
-              setCurrentRound({ ...currentRound, round: value })
+            onChange={
+              (value) => setCurrentRound({ ...currentRound, round: value }) // Keep as a string
             }
             placeholder="Select Round"
           />
@@ -122,7 +138,7 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({
           </label>
           <input
             id="fdv"
-            type="number"
+            type="text" // Accept string
             value={currentRound.fdv}
             onChange={(e) =>
               setCurrentRound({ ...currentRound, fdv: e.target.value })
@@ -138,7 +154,7 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({
           </label>
           <input
             id="price"
-            type="number"
+            type="text" // Accept string
             value={currentRound.price}
             onChange={(e) =>
               setCurrentRound({ ...currentRound, price: e.target.value })
@@ -157,7 +173,7 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({
           </label>
           <input
             id="tgeUnlock"
-            type="number"
+            type="text" // Accept string
             value={currentRound.tgeUnlock}
             onChange={(e) =>
               setCurrentRound({ ...currentRound, tgeUnlock: e.target.value })
@@ -202,8 +218,9 @@ const TokenMetrics: React.FC<TokenMetricsProps> = ({
         </div>
         <div className="flex justify-end">
           <button
+            type="button" // Change to button type
             onClick={addAnotherRound}
-            className="w-[166px] p-3   items-center bg-white  text-[#4F46E5] rounded-md border border-[#4F46E5] mb-4"
+            className="w-[166px] p-3 items-center bg-white text-[#4F46E5] rounded-md border border-[#4F46E5] mb-4"
           >
             Add Another Round
           </button>
