@@ -150,13 +150,23 @@ const PartnersAndInvestors: React.FC<PartnersAndInvestorsProps> = ({
         </div>
       ))}
 
-      <button
+      {/* <button
         type="button"
         onClick={addPartner}
         className="text-indigo-600 underline"
       >
         Add another partner
-      </button>
+      </button> */}
+
+      <div className="flex justify-end">
+        <button
+          type="button" // Change to button type
+          onClick={addPartner}
+          className="w-[166px] p-3 bg-white text-[#4F46E5] rounded-md border border-[#4F46E5] mb-4 font-urbanist font-semibold text-[12px]"
+        >
+          Add another partner
+        </button>
+      </div>
 
       <button
         type="submit"

@@ -186,13 +186,22 @@ const TeamAndAdvisors: React.FC<TeamAndAdvisorsProps> = ({
         </div>
       ))}
 
-      <button
+      {/* <button
         type="button"
         onClick={addTeamMember}
         className="text-indigo-600 underline"
       >
         Add another team member
-      </button>
+      </button> */}
+      <div className="flex justify-end">
+        <button
+          type="button" // Change to button type
+          onClick={addTeamMember}
+          className="w-[166px] p-2 bg-white text-[#4F46E5] rounded-md border border-[#4F46E5] mb-4 font-urbanist font-semibold text-[12px]"
+        >
+          Add another team member
+        </button>
+      </div>
 
       <button
         type="submit"

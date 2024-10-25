@@ -297,7 +297,7 @@ export interface ProjectDetails {
     round: string;
     fdv: string;
     price: string;
-    tgeUnlock: string;
+    tgeUnlock: number;
     tge: string;
     tgeSummary: string;
   };
